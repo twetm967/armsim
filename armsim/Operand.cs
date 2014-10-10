@@ -32,7 +32,7 @@ namespace armsim
                     if (instr.TestFlag(0, i) == true){ immed += (int)Math.Pow(2, i);}                   
                 }
 
-                rot = instr.ReadNibble(8); //gets #rot (immediate alignment)
+                rot = instr.ReadNibble(8) * 2; //gets #rot (immediate alignment) * 2
 
             }
             else //shift by register
