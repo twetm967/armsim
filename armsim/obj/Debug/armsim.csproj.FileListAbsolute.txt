@@ -1,0 +1,16 @@
+C:\Users\Thomas Wetmore\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\bin\Debug\armsim.exe.config
+C:\Users\Thomas Wetmore\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\bin\Debug\armsim.exe
+C:\Users\Thomas Wetmore\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\bin\Debug\armsim.pdb
+C:\Users\Thomas Wetmore\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\obj\Debug\armsim.exe
+C:\Users\Thomas Wetmore\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\obj\Debug\armsim.pdb
+C:\Users\Thomas Wetmore\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\obj\Debug\armsim.ui.resources
+C:\Users\Thomas Wetmore\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\obj\Debug\armsim.csproj.GenerateResource.Cache
+C:\Users\Thomas Wetmore\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\obj\Debug\armsim.csprojResolveAssemblyReference.cache
+C:\Users\Thomas\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\bin\Debug\armsim.exe.config
+C:\Users\Thomas\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\obj\Debug\armsim.exe
+C:\Users\Thomas\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\obj\Debug\armsim.pdb
+C:\Users\Thomas\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\bin\Debug\armsim.exe
+C:\Users\Thomas\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\bin\Debug\armsim.pdb
+C:\Users\Thomas\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\obj\Debug\armsim.csprojResolveAssemblyReference.cache
+C:\Users\Thomas\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\obj\Debug\armsim.ui.resources
+C:\Users\Thomas\Documents\Academics\3-Junior\Fall\Micro\Project\Loader\armsim\armsim\obj\Debug\armsim.csproj.GenerateResource.Cache
