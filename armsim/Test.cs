@@ -42,8 +42,10 @@ namespace armsim
             Log.WriteToLog("Unit Test #4 Passed");*/
 
             ram.clearRam();
+            Registers reg = new Registers();
+            reg.setMem(64);
             uint number = 0xE3A02030;                  //00001100000001000000010111000111
-            Instruction.decode(number);
+            Instruction.decode(number, reg);
             //Console.WriteLine("The test passed.");
             Console.ReadLine();
         }

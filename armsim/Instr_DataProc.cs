@@ -17,12 +17,14 @@ namespace armsim
         //string opcode = "";
         int opcode, Rn, Rd, cond;
         Operand op;
+        Registers reg;
         Memory instr;
         bool s = false;
 
-        public Instr_DataProc(Memory inst)
+        public Instr_DataProc(Memory inst, Registers r)
         {
             instr = inst;
+            reg = r;
         }
         
         //sets instance variables then calls exec()
@@ -86,8 +88,8 @@ namespace armsim
                     execORR();
                     break;
                 case 13:
+                    Console.WriteLine("Running MOV command...");
                     execMOV();
-                    Console.WriteLine("Running MOV commend...");
                     break;
                 case 14:
                     execBIC();
@@ -156,6 +158,25 @@ namespace armsim
         {
             //do fun things
             Console.WriteLine("IT WAS CORRECT!!!!!!!!!!!");
+            int type = op.getType();
+            switch (type)
+            {
+                case 0: //immediate
+                    Console.WriteLine("Case 0");
+                    int shift = op.getRot();
+                    int data = op.getImmed();
+                    data = (data >> shift) | (data << (32 -shift));
+                    Console.WriteLine("Data: " + data.ToString());
+                    reg.setRegister(Rd, (uint)data);
+                    Console.WriteLine("R2: " + reg.getRegData(Rd));
+                    break;
+                case 1:
+                    Console.WriteLine("Case 1");
+                    break;
+                case 2:
+                    Console.WriteLine("Case 1");
+                    break;
+            }
 
         }
         public void execBIC()

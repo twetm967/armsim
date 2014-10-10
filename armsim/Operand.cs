@@ -29,7 +29,7 @@ namespace armsim
                 type = 0;
                 for (int i = 0; i < 8; ++ i) //gets 8-bit immediate
                 {
-                    if (instr.TestFlag(0, i)){ immed += 2 ^ i;}                   
+                    if (instr.TestFlag(0, i) == true){ immed += (int)Math.Pow(2, i);}                   
                 }
 
                 rot = instr.ReadNibble(8); //gets #rot (immediate alignment)
@@ -43,12 +43,12 @@ namespace armsim
                     Rm = instr.ReadNibble(0); 
                     for (int i = 5; i < 7; ++i) // gets the shift type
                     {
-                        if (instr.TestFlag(0, i)) { shiftType += 2 ^ (i-5); }
+                        if (instr.TestFlag(0, i)) { shiftType += (int)Math.Pow(2, (i-5)); }
                     }
 
                     for (int i = 7; i < 12; ++i) // gets the shift amount
                     {
-                        if (instr.TestFlag(0, i)) { shiftAm += 2 ^ (i - 7); }
+                        if (instr.TestFlag(0, i)) { shiftAm += (int)Math.Pow(2 , (i - 7)); }
                     }
                 }
                 else //register shifted register, type = 2
@@ -57,7 +57,7 @@ namespace armsim
                     Rm = instr.ReadNibble(0);
                     for (int i = 5; i < 7; ++i) // gets the shift type
                     {
-                        if (instr.TestFlag(0, i)) { shiftType += 2 ^ (i - 5); }
+                        if (instr.TestFlag(0, i)) { shiftType += (int)Math.Pow(2, (i - 5)); }
                     }
 
                     Rs = instr.ReadNibble(8);

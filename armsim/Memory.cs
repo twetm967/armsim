@@ -129,10 +129,10 @@ namespace armsim
                 if (b == true)
                 {
                     num += (int)Math.Pow(2 , i);
-                    Console.WriteLine("Num: " + num.ToString());
+                    //Console.WriteLine("Num: " + num.ToString());
                 }
             }
-           Console.WriteLine("Num: " + num.ToString());
+           //Console.WriteLine("Num: " + num.ToString());
            return num;
         }
         public byte ReadByte(Int32 address)

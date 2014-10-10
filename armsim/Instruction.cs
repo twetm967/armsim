@@ -17,7 +17,7 @@ namespace armsim
     {
 
         //switch statement to decide instruction type and calls that class decode
-        public static void decode(uint instr)
+        public static void decode(uint instr, Registers reg)
         {
             Memory instruction = new Memory();
             instruction.setMem(4);
@@ -28,7 +28,7 @@ namespace armsim
             {
                 //Data Processing
                 Console.WriteLine("Data_Proc Instruction...");
-                Instr_DataProc poc = new Instr_DataProc(instruction);
+                Instr_DataProc poc = new Instr_DataProc(instruction, reg);
                 poc.decode();
             }
             else if(instruction.TestFlag(0, 27) == false && instruction.TestFlag(0, 26) == true)

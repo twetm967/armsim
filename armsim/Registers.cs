@@ -25,7 +25,7 @@ namespace armsim
         {
             Log.WriteToLog("Setting data to register: " + reg.ToString());
             uint regAddress = (uint)reg * 4;
-            WriteWord((int)reg, data);
+            WriteWord((int)regAddress, data);
         }
 
         public void incrementCounter()
