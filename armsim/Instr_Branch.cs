@@ -15,9 +15,11 @@ namespace armsim
     class Instr_Branch : Instruction
     {
         Memory instr;
-        public Instr_Branch(Memory inst)
+        Registers reg;
+        public Instr_Branch(Memory inst, Registers r)
         {
             instr = inst;
+            reg = r;
         }
     }
 }

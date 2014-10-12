@@ -35,6 +35,9 @@ namespace armsim
             {
                 //Load/store
                 Console.WriteLine("Load/Store Instruction...");
+                Instr_LoadStore load = new Instr_LoadStore(instruction, reg);
+                load.decode();
+
             }
             else if (instruction.TestFlag(0, 27) == true && instruction.TestFlag(0, 26) == false)
             {

@@ -15,18 +15,21 @@ namespace armsim
     class Instr_LoadStore : Instruction
     {
         Memory instr;
+        Registers reg;
         //constructor
-        public Instr_LoadStore(Memory inst)
+        public Instr_LoadStore(Memory inst, Registers r)
         {
             instr = inst;
+            reg = r;
         }
 
         //determins which execute command to run
         public void decode()
         {
-            
+            //decode fun things
         }
-
+        
+        //add more instructions
         public void execLDR()
         {
 
