@@ -101,6 +101,48 @@ namespace armsim
             }
         }
 
+        public uint computeShift(int type)
+        {
+            uint num = 0;
+
+            int shiftAm = 0;
+            uint data = reg.getRegData(op.getRm());
+            if (type == 1) //immediate shift register
+            {
+                shiftAm = op.getShiftAm();
+            }
+            else //register shifted register
+            {
+                shiftAm = (int)reg.getRegData(op.getRs());
+            }
+            int shiftType = op.getShiftType();
+
+            switch (shiftType)
+            {
+                case 0: //LSL
+                    num = (data << shiftAm);
+                    break;
+                case 1: //ASR
+                    num = (uint)((int)data >> shiftAm);
+                    break;
+                case 2: //LSR
+                    num = (data >> shiftAm);
+                    break;
+                case 3: //ROR*/RRX
+                    if(op.getROR() == true) //ROR
+                    {
+                        num = (data >> shiftAm) | (data << (32 - shiftAm));
+                    }
+                    else //RRX
+                    {
+                        num = (data >> 1) | (data << (32 - 1));
+                    }
+                    break;
+            }
+
+            return num;
+        }
+
         public void execAND()
         {
 
@@ -157,7 +199,6 @@ namespace armsim
         public void execMOV()
         {
             //do fun things
-            Console.WriteLine("IT WAS CORRECT!!!!!!!!!!!");
             int type = op.getType();
             switch (type)
             {
@@ -172,9 +213,13 @@ namespace armsim
                     break;
                 case 1:
                     Console.WriteLine("Case 1");
+                    uint num = computeShift(type);
+                    reg.setRegister(Rd, num);
                     break;
                 case 2:
-                    Console.WriteLine("Case 1");
+                    Console.WriteLine("Case 2");
+                    uint num1 = computeShift(type);
+                    reg.setRegister(Rd, num1);
                     break;
             }
 

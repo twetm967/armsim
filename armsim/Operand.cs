@@ -11,6 +11,7 @@ namespace armsim
     {
         Memory instr;
         bool ifShift = false;
+        bool ROR = true;
         int shiftType, Rm, Rs, immed, rot, shiftAm, type = 0;
 
         public Operand(Memory mem, bool b)
@@ -62,6 +63,13 @@ namespace armsim
 
                     Rs = instr.ReadNibble(8);
                 }
+                int num = 0;
+                for (int i = 7; i < 12; ++i) // tests ROR/RRX
+                { 
+                    if (instr.TestFlag(0, i)) { num += (int)Math.Pow(2, (i - 7)); }
+                }
+                if (num == 0) { ROR = false; }
+
             }
         }
 
@@ -69,6 +77,7 @@ namespace armsim
 
         //*********************GETTERS************************//
         public int getRm() { return Rm; }
+        public bool getROR() { return ROR; }
         public int getRs() { return Rs; }
         public int getImmed() { return immed; }
         public int getRot() { return rot; }
