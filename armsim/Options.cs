@@ -19,6 +19,17 @@ namespace armsim
         private bool test = false; //this bool tells whether or not to run the unit tests
         private bool arg = true;
 
+        public Computer Computer
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+
 
 
         //*************Getters******************

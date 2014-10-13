@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace armsim
 {
-    class Instr_DataProc : Instruction
+    class Instr_DataProc //: Instruction
     {
         //string opcode = "";
         int opcode, Rn, Rd, cond;
@@ -26,6 +26,7 @@ namespace armsim
             instr = inst;
             reg = r;
         }
+
         
         //sets instance variables then calls exec()
         public void decode()

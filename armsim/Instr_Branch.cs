@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace armsim
 {
-    class Instr_Branch : Instruction
+    class Instr_Branch //: Instruction
     {
         Memory instr;
         Registers reg;
@@ -20,6 +20,11 @@ namespace armsim
         {
             instr = inst;
             reg = r;
+        }
+
+        public void decode()
+        {
+            //do fun things later
         }
     }
 }

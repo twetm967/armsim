@@ -17,6 +17,18 @@ namespace armsim
 
         //finds and saves all of the program headers 
         FileStream strm;
+
+        public Computer Computer
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+    
         public bool decodeHeaders(string args, Memory mem)
         {
             List<ELFData> elfData = new List<ELFData>();

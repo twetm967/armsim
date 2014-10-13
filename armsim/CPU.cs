@@ -23,6 +23,7 @@ namespace armsim
         static TextWriterTraceListener log = new TextWriterTraceListener("trace.log");
         Registers reg;
         Memory mem;
+        Instruction inst;
         bool tracer = false;
 
 
@@ -56,6 +57,7 @@ namespace armsim
 
 
             data = reg.getRegData(15);
+            inst = new Instruction(data, reg);
             ++step_number;
             return data;
         }
@@ -63,6 +65,7 @@ namespace armsim
         public void decode()
         {
             //this does nothing for this stage
+            inst.decode();
         }
 
         public void execute()
@@ -70,7 +73,8 @@ namespace armsim
             //pause 1/4 second
             //await Task.Delay(250);
 
-            System.Threading.Thread.Sleep(250);
+            //System.Threading.Thread.Sleep(250);
+            inst.exec();
             if (tracer == true)
             {
                 log.Write(mem.getMD() + " " + printFlags() + " 0=" + reg.getRegData(0).ToString() +

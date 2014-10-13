@@ -17,6 +17,17 @@ namespace armsim
     {
         private byte[] Ram;
 
+        public Computer Computer
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+
 
 
         public void setMem(int memsize)

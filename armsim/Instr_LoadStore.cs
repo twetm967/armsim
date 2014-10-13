@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace armsim
 {
-    class Instr_LoadStore : Instruction
+    class Instr_LoadStore //: Instruction
     {
         Memory instr;
         Registers reg;

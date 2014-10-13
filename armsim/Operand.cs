@@ -19,7 +19,7 @@ namespace armsim
             instr = mem;
             ifShift = b;
             parse();
-            
+
         }
 
         //parses the operand so and stored in instance variables
