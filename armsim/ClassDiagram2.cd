@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="armsim.Computer" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAACgQAAJAAEAMIAAEgEABAAACgAAAAAIAAIIKAEAA=</HashCode>
+      <FileName>Computer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="armsim.CPU" Collapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAsVCQABEAAgAADQEAAQAQABEJA=</HashCode>
+      <FileName>CPU.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="armsim.Instr_Branch">
+    <Position X="6.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Instr_Branch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="armsim.Instr_DataProc">
+    <Position X="9.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAFAAAMCAgACAAwAIAEAIAEAAAEABACIIYACAQLAA=</HashCode>
+      <FileName>Instr_DataProc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="armsim.Instr_LoadStore">
+    <Position X="11.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAKAAAAAAABAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Instr_LoadStore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="armsim.Instruction">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Instruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="armsim.Memory" Collapsed="true">
+    <Position X="13" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAACEAAAAACAEACAIAAAAggAEAANAgAAAQAAAAEAA=</HashCode>
+      <FileName>Memory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Computer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="armsim.Operand">
+    <Position X="6.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAIAAAAAAiAAQAAABAACAwghBAAIAAAAAACEIEA=</HashCode>
+      <FileName>Operand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="armsim.Options" Collapsed="true">
+    <Position X="11.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEACAAAgEAAADAIAEBAAAAAIAA=</HashCode>
+      <FileName>Options.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Computer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="armsim.Registers" Collapsed="true">
+    <Position X="13" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAABCAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Registers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="armsim.SantasLittleHelpers" Collapsed="true">
+    <Position X="7.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAQACAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>SantasLittleHelpers.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Computer" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
