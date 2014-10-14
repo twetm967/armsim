@@ -13,73 +13,43 @@ using System.Windows.Forms;
 namespace armsim
 {
     //This class holds the information for instruction operations
-    public class Instruction
+    abstract class Instruction
     {
-       
-        int type = 0;
-        Memory instruction;
-        Registers reg;
-        public Instruction(uint instr, Registers r)
+        public static Instruction decode(uint instr, Registers reg)
         {
-            reg = r;
-            instruction = new Memory();
+           // int type = 0;
+            Memory instruction = new Memory();
             instruction.setMem(4);
             instruction.WriteWord(0, instr);
             instruction.PrintArray();
-        }
-        //switch statement to decide instruction type and calls that class decode
-        public void decode()
-        {
-             
 
             if (instruction.TestFlag(0, 27) == false && instruction.TestFlag(0, 26) == false)
             {
                 //Data Processing
-                type = 0;
+                //type = 0;
                 Console.WriteLine("Data_Proc Instruction...");
+                return new Instr_DataProc(instruction, reg);
                 
                 
             }
             else if(instruction.TestFlag(0, 27) == false && instruction.TestFlag(0, 26) == true)
             {
                 //Load/store
-                type = 1;
                 Console.WriteLine("Load/Store Instruction...");
+                return new Instr_LoadStore(instruction, reg);
                 
-                ///return load;
-
             }
             else if (instruction.TestFlag(0, 27) == true && instruction.TestFlag(0, 26) == false)
             {
                 //Branching
-                type = 2;
                 Console.WriteLine("Branching Instruction...");
-                
-                
+                return new Instr_Branch(instruction, reg);
             }
-
+            return null;
   
         }
-
-        public void exec()
-        {
-            if (type == 0)
-            {
-                Instr_DataProc poc = new Instr_DataProc(instruction, reg);
-                poc.decode();
-            }
-            else if (type == 1)
-            {
-                Instr_LoadStore load = new Instr_LoadStore(instruction, reg);
-                load.decode();
-            }else if (type ==2)
-            {
-                Instr_Branch bran = new Instr_Branch(instruction, reg);
-                bran.decode();
-            }
-        }
-
-
-
+        public abstract void decode(); //allows for override
+        public abstract void exec(); //allows for override
     }
 }
+

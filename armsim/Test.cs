@@ -20,7 +20,7 @@ namespace armsim
         {
             Memory ram = new Memory();
             ram.setMem(1024);
-            ram.WriteWord(0, 823746);
+            /*ram.WriteWord(0, 823746);
             Debug.Assert(ram.ReadWord(0) == 823746);
             Log.WriteToLog("Unit Test #1 Passed!");
 
@@ -34,18 +34,18 @@ namespace armsim
             byte blob = 215;
             ram.WriteByte(0, blob);
             Debug.Assert(ram.ReadByte(0) == 215);
-            Log.WriteToLog("Unit Test #3 Passed");
+            Log.WriteToLog("Unit Test #3 Passed");*/
 
             
 
             ram.clearRam();
             Registers reg = new Registers();
             reg.setMem(64);
-            uint number = 0xE3A02069;                  //00001100000001000000010111000111 0xE3A02030
-            Instruction inst = new Instruction(number, reg);
+            uint number = 0xE3A02030;                  //00001100000001000000010111000111 0xE3A02030
+            Instruction inst = Instruction.decode(number, reg);
             inst.decode();
             inst.exec();
-            Debug.Assert(reg.getRegData(2) == 105);
+            Debug.Assert(reg.getRegData(2) == 48);
 
             Console.WriteLine("The MOV test Passed.");
             Console.ReadLine();

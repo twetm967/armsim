@@ -10,19 +10,19 @@
   <Class Name="armsim.CPU" Collapsed="true">
     <Position X="9.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAAAAAAAAAAAAAAAsVCQABEAAgAADQEAAQAQABEJA=</HashCode>
+      <HashCode>AAgAAAAAAAAAAAAAAAsVCQABEAAgAALQEAAQAQABEJA=</HashCode>
       <FileName>CPU.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="armsim.Instr_Branch">
     <Position X="6.75" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAACAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAACAAAAIAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
       <FileName>Instr_Branch.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="armsim.Instr_DataProc">
-    <Position X="9.25" Y="4" Width="1.5" />
+    <Position X="9.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAFAAAMCAgACAAwAIAEAIAEAAAEABACIIYACAQLAA=</HashCode>
       <FileName>Instr_DataProc.cs</FileName>
@@ -38,7 +38,7 @@
   <Class Name="armsim.Instruction">
     <Position X="9.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAABAABACAAQAAAAAAA=</HashCode>
       <FileName>Instruction.cs</FileName>
     </TypeIdentifier>
   </Class>

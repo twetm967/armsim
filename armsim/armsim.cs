@@ -1,4 +1,8 @@
-﻿namespace armsim
+﻿//Thomas Wetmore twetm967 (639306)
+//all test cases pass
+//inheritance was giving me issues and is still being worked on 
+
+namespace armsim
 {
     using System;
     using System.Collections.Generic;

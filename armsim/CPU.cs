@@ -57,7 +57,7 @@ namespace armsim
 
 
             data = reg.getRegData(15);
-            inst = new Instruction(data, reg);
+            
             ++step_number;
             return data;
         }
@@ -65,6 +65,7 @@ namespace armsim
         public void decode()
         {
             //this does nothing for this stage
+            inst = Instruction.decode(data, reg);
             inst.decode();
         }
 

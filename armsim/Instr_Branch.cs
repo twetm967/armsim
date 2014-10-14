@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace armsim
 {
-    class Instr_Branch //: Instruction
+    class Instr_Branch : Instruction
     {
         Memory instr;
         Registers reg;
@@ -22,9 +22,14 @@ namespace armsim
             reg = r;
         }
 
-        public void decode()
+        public override void decode()
         {
             //do fun things later
+        }
+
+        public override void exec()
+        {
+            //throw new NotImplementedException();
         }
     }
 }

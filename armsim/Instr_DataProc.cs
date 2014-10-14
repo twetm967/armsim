@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace armsim
 {
-    class Instr_DataProc //: Instruction
+    class Instr_DataProc : Instruction
     {
         //string opcode = "";
         int opcode, Rn, Rd, cond;
@@ -29,7 +29,7 @@ namespace armsim
 
         
         //sets instance variables then calls exec()
-        public void decode()
+        public override void decode()
         {
             Console.WriteLine("Running Data_Proc decode..."); 
             Rn = instr.ReadNibble(16);
@@ -40,12 +40,12 @@ namespace armsim
             Console.WriteLine("Opcode: " + opcode.ToString());
             s = instr.TestFlag(0, 25);
             op = new Operand(instr, s);
-            exec();
+            //exec();
 
         }
 
         //uses switch and instance variables to call the corresct execute command
-        public void exec()
+        public override void exec()
         {
             switch (opcode)
             {

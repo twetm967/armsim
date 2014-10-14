@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace armsim
 {
-    class Instr_LoadStore //: Instruction
+    class Instr_LoadStore : Instruction
     {
         Memory instr;
         Registers reg;
@@ -24,9 +24,14 @@ namespace armsim
         }
 
         //determins which execute command to run
-        public void decode()
+        public override void decode()
         {
             //decode fun things
+        }
+
+        public override void exec()
+        {
+            //throw new NotImplementedException();
         }
         
         //add more instructions
