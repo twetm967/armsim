@@ -155,7 +155,29 @@ namespace armsim
         }
         public void execSUB()
         {
-
+             int type = op.getType();
+            switch (type)
+            {
+                case 0: //immediate
+                    Console.WriteLine("Case 0");
+                    int shift = op.getRot();
+                    int data = op.getImmed();
+                    data = (data >> shift) | (data << (32 -shift));
+                    Console.WriteLine("Data: " + data.ToString());
+                    //data += (int)reg.getRegData(Rn);
+                    reg.setRegister(Rd, (uint)data - reg.getRegData(Rn));
+                    Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
+                    break;
+                case 1:
+                    Console.WriteLine("Case 1");
+                    uint num = computeShift(type);
+                    reg.setRegister(Rd, num - reg.getRegData(Rn));
+                    break;
+                case 2:
+                    Console.WriteLine("Case 2");
+                    uint num1 = computeShift(type);
+                    reg.setRegister(Rd, num1 - reg.getRegData(Rn));
+                    break;
         }
         public void execRSB()
         {
@@ -163,7 +185,29 @@ namespace armsim
         }
         public void execADD()
         {
-
+            int type = op.getType();
+            switch (type)
+            {
+                case 0: //immediate
+                    Console.WriteLine("Case 0");
+                    int shift = op.getRot();
+                    int data = op.getImmed();
+                    data = (data >> shift) | (data << (32 -shift));
+                    Console.WriteLine("Data: " + data.ToString());
+                    data += (int)reg.getRegData(Rn);
+                    reg.setRegister(Rd, (uint)data);
+                    Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
+                    break;
+                case 1:
+                    Console.WriteLine("Case 1");
+                    uint num = computeShift(type);
+                    reg.setRegister(Rd, num + reg.getRegData(Rn));
+                    break;
+                case 2:
+                    Console.WriteLine("Case 2");
+                    uint num1 = computeShift(type);
+                    reg.setRegister(Rd, num1 + reg.getRegData(Rn));
+                    break;
         }
         public void execADC()
         {
@@ -210,7 +254,7 @@ namespace armsim
                     data = (data >> shift) | (data << (32 -shift));
                     Console.WriteLine("Data: " + data.ToString());
                     reg.setRegister(Rd, (uint)data);
-                    Console.WriteLine("R2: " + reg.getRegData(Rd));
+                    Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
                     break;
                 case 1:
                     Console.WriteLine("Case 1");
