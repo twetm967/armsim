@@ -10,14 +10,16 @@ namespace armsim
     class Operand
     {
         Memory instr;
+        Registers reg;
         bool ifShift = false;
         bool ROR = true;
         uint shiftType, Rm, Rs, immed, rot, shiftAm, type = 0;
 
-        public Operand(Memory mem, bool b)
+        public Operand(Memory mem, bool b, Registers r)
         {
             instr = mem;
             ifShift = b;
+            reg = r;
             parse();
 
         }
@@ -73,6 +75,47 @@ namespace armsim
             }
         }
 
+        public uint computeShift(uint type)
+        {
+            uint num = 0;
+            
+            uint SAm = 0;
+            uint data = reg.getRegData(Rm);
+            if (type == 1) //immediate shift register
+            {
+                SAm = shiftAm;
+            }
+            else //register shifted register
+            {
+                SAm = reg.getRegData(Rs);
+            }
+            //uint shiftType = shiftType;
+
+            switch (shiftType)
+            {
+                case 0: //LSL
+                    num = (data << Convert.ToInt32(SAm));
+                    break;
+                case 1: //ASR
+                    num = Convert.ToUInt32((Convert.ToInt32(data) >> Convert.ToInt32(SAm)));
+                    break;
+                case 2: //LSR
+                    num = (data >> Convert.ToInt32(SAm));
+                    break;
+                case 3: //ROR*/RRX
+                    if (getROR() == true) //ROR
+                    {
+                        num = (data >> Convert.ToInt32(SAm)) | (data << (32 - Convert.ToInt32(SAm)));
+                    }
+                    else //RRX
+                    {
+                        num = (data >> 1) | (data << (32 - 1));
+                    }
+                    break;
+            }
+
+            return num;
+        }
 
 
         //*********************GETTERS************************//

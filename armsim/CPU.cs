@@ -71,10 +71,6 @@ namespace armsim
 
         public void execute()
         {
-            //pause 1/4 second
-            //await Task.Delay(250);
-
-            //System.Threading.Thread.Sleep(250);
             inst.exec();
             if (tracer == true)
             {
