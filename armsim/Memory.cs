@@ -117,15 +117,15 @@ namespace armsim
             return false;
         }
         //reads and returns a byte from the ram array at a specified address
-        public int ReadNibble(uint address)
+        public uint ReadNibble(uint address)
         {
-            int num = 0;
+            uint num = 0;
             for (int i = 0; i < 4; ++i)
             {
                 bool b = TestFlag(0, (int)address + i);
                 if (b == true)
                 {
-                    num += (int)Math.Pow(2 , i);
+                    num += Convert.ToUInt32(Math.Pow(2 , i));
                     //Console.WriteLine("Num: " + num.ToString());
                 }
             }

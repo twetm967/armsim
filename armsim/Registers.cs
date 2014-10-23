@@ -14,17 +14,17 @@ namespace armsim
 {
     public class Registers : Memory
     {
-        public uint getRegData(int num)
+        public uint getRegData(uint num)
         {
             Log.WriteToLog("Reading data from register: " + num.ToString());
             uint reg = (uint)num * 4;
             return ReadWord(reg);
         }
 
-        public void setRegister(int reg, uint data)
+        public void setRegister(uint reg, uint data)
         {
             Log.WriteToLog("Setting data to register: " + reg.ToString());
-            uint regAddress = (uint)reg * 4;
+            uint regAddress = reg * 4;
             WriteWord(regAddress, data);
         }
 
@@ -39,7 +39,7 @@ namespace armsim
         public void clearRegs()
         {
             Log.WriteToLog("***Clearing all registers***");
-            for (int i = 0; i < 16; ++i)
+            for (uint i = 0; i < 16; ++i)
             {
                 setRegister(i, 0);
             }

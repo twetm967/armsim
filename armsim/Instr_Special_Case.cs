@@ -32,11 +32,11 @@ namespace armsim
 
         public static bool checkMUL(Memory inst)
         {
-            int num1 = 0;
-            int num2 = 0;
+            uint num1 = 0;
+            uint num2 = 0;
             for (int i = 21; i < 28; ++i) 
             {
-                if (inst.TestFlag(0, i) == true) { num1 += (int)Math.Pow(2, i-21); }
+                if (inst.TestFlag(0, i) == true) { num1 += Convert.ToUInt32(Math.Pow(2, i-21)); }
             }
             num2 = inst.ReadNibble(4);
             if (num1 == 0 && num2 == 9)

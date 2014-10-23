@@ -12,7 +12,7 @@ namespace armsim
         Memory instr;
         bool ifShift = false;
         bool ROR = true;
-        int shiftType, Rm, Rs, immed, rot, shiftAm, type = 0;
+        uint shiftType, Rm, Rs, immed, rot, shiftAm, type = 0;
 
         public Operand(Memory mem, bool b)
         {
@@ -30,7 +30,7 @@ namespace armsim
                 type = 0;
                 for (int i = 0; i < 8; ++ i) //gets 8-bit immediate
                 {
-                    if (instr.TestFlag(0, i) == true){ immed += (int)Math.Pow(2, i);}                   
+                    if (instr.TestFlag(0, i) == true){ immed += Convert.ToUInt32(Math.Pow(2, i));}                   
                 }
 
                 rot = instr.ReadNibble(8) * 2; //gets #rot (immediate alignment) * 2
@@ -44,12 +44,12 @@ namespace armsim
                     Rm = instr.ReadNibble(0); 
                     for (int i = 5; i < 7; ++i) // gets the shift type
                     {
-                        if (instr.TestFlag(0, i)) { shiftType += (int)Math.Pow(2, (i-5)); }
+                        if (instr.TestFlag(0, i)) { shiftType += Convert.ToUInt32(Math.Pow(2, (i-5))); }
                     }
 
                     for (int i = 7; i < 12; ++i) // gets the shift amount
                     {
-                        if (instr.TestFlag(0, i)) { shiftAm += (int)Math.Pow(2 , (i - 7)); }
+                        if (instr.TestFlag(0, i)) { shiftAm += Convert.ToUInt32(Math.Pow(2 , (i - 7))); }
                     }
                 }
                 else //register shifted register, type = 2
@@ -58,15 +58,15 @@ namespace armsim
                     Rm = instr.ReadNibble(0);
                     for (int i = 5; i < 7; ++i) // gets the shift type
                     {
-                        if (instr.TestFlag(0, i)) { shiftType += (int)Math.Pow(2, (i - 5)); }
+                        if (instr.TestFlag(0, i)) { shiftType += Convert.ToUInt32(Math.Pow(2, (i - 5))); }
                     }
 
                     Rs = instr.ReadNibble(8);
                 }
-                int num = 0;
+                uint num = 0;
                 for (int i = 7; i < 12; ++i) // tests ROR/RRX
                 { 
-                    if (instr.TestFlag(0, i)) { num += (int)Math.Pow(2, (i - 7)); }
+                    if (instr.TestFlag(0, i)) { num += Convert.ToUInt32(Math.Pow(2, (i - 7))); }
                 }
                 if (num == 0) { ROR = false; }
 
@@ -76,14 +76,14 @@ namespace armsim
 
 
         //*********************GETTERS************************//
-        public int getRm() { return Rm; }
+        public uint getRm() { return Rm; }
         public bool getROR() { return ROR; }
-        public int getRs() { return Rs; }
-        public int getImmed() { return immed; }
-        public int getRot() { return rot; }
-        public int getShiftAm() { return shiftAm; }
-        public int getType() { return type; }
-        public int getShiftType() { return shiftType; }
+        public uint getRs() { return Rs; }
+        public uint getImmed() { return immed; }
+        public uint getRot() { return rot; }
+        public uint getShiftAm() { return shiftAm; }
+        public uint getType() { return type; }
+        public uint getShiftType() { return shiftType; }
         //****************************************************//
     }
 }

@@ -15,7 +15,7 @@ namespace armsim
     class Instr_DataProc : Instruction
     {
         //string opcode = "";
-        int opcode, Rn, Rd, cond;
+        uint opcode, Rn, Rd, cond;
         Operand op;
         Registers reg;
         Memory instr;
@@ -102,11 +102,11 @@ namespace armsim
             }
         }
 
-        public uint computeShift(int type)
+        public uint computeShift(uint type)
         {
             uint num = 0;
 
-            int shiftAm = 0;
+            uint shiftAm = 0;
             uint data = reg.getRegData(op.getRm());
             if (type == 1) //immediate shift register
             {
@@ -114,25 +114,25 @@ namespace armsim
             }
             else //register shifted register
             {
-                shiftAm = (int)reg.getRegData(op.getRs());
+                shiftAm = reg.getRegData(op.getRs());
             }
-            int shiftType = op.getShiftType();
+            uint shiftType = op.getShiftType();
 
             switch (shiftType)
             {
                 case 0: //LSL
-                    num = (data << shiftAm);
+                    num = (data << Convert.ToInt32(shiftAm));
                     break;
                 case 1: //ASR
-                    num = (uint)((int)data >> shiftAm);
+                    num = Convert.ToUInt32((Convert.ToInt32(data) >> Convert.ToInt32(shiftAm)));
                     break;
                 case 2: //LSR
-                    num = (data >> shiftAm);
+                    num = (data >> Convert.ToInt32(shiftAm));
                     break;
                 case 3: //ROR*/RRX
                     if(op.getROR() == true) //ROR
                     {
-                        num = (data >> shiftAm) | (data << (32 - shiftAm));
+                        num = (data >> Convert.ToInt32(shiftAm)) | (data << (32 - Convert.ToInt32(shiftAm)));
                     }
                     else //RRX
                     {
@@ -155,17 +155,17 @@ namespace armsim
         }
         public void execSUB()
         {
-             int type = op.getType();
+             uint type = op.getType();
             switch (type)
             {
                 case 0: //immediate
                     Console.WriteLine("Case 0");
-                    int shift = op.getRot();
-                    int data = op.getImmed();
-                    data = (data >> shift) | (data << (32 -shift));
+                    uint shift = op.getRot();
+                    uint data = op.getImmed();
+                    data = (data >> Convert.ToInt32(shift)) | (data << (32 - Convert.ToInt32(shift)));
                     Console.WriteLine("Data: " + data.ToString());
                     //data += (int)reg.getRegData(Rn);
-                    reg.setRegister(Rd, (uint)data - reg.getRegData(Rn));
+                    reg.setRegister(Rd, data - reg.getRegData(Rn));
                     Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
                     break;
                 case 1:
@@ -186,17 +186,17 @@ namespace armsim
         }
         public void execADD()
         {
-            int type = op.getType();
+            uint type = op.getType();
             switch (type)
             {
                 case 0: //immediate
                     Console.WriteLine("Case 0");
-                    int shift = op.getRot();
-                    int data = op.getImmed();
-                    data = (data >> shift) | (data << (32 - shift));
+                    uint shift = op.getRot();
+                    uint data = op.getImmed();
+                    data = (data >> Convert.ToInt32(shift)) | (data << (32 - Convert.ToInt32(shift)));
                     Console.WriteLine("Data: " + data.ToString());
-                    data += (int)reg.getRegData(Rn);
-                    reg.setRegister(Rd, (uint)data);
+                    data += reg.getRegData(Rn);
+                    reg.setRegister(Rd, data);
                     Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
                     break;
                 case 1:
@@ -246,14 +246,14 @@ namespace armsim
         public void execMOV()
         {
             //do fun things
-            int type = op.getType();
+            uint type = op.getType();
             switch (type)
             {
                 case 0: //immediate
                     Console.WriteLine("Case 0");
-                    int shift = op.getRot();
-                    int data = op.getImmed();
-                    data = (data >> shift) | (data << (32 -shift));
+                    uint shift = op.getRot();
+                    uint data = op.getImmed();
+                    data = (data >> Convert.ToInt32(shift)) | (data << (32 - Convert.ToInt32(shift)));
                     Console.WriteLine("Data: " + data.ToString());
                     reg.setRegister(Rd, (uint)data);
                     Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
@@ -277,7 +277,29 @@ namespace armsim
         }
         public void execMVN()
         {
-
+            uint type = op.getType();
+            switch (type)
+            {
+                case 0: //immediate
+                    Console.WriteLine("Case 0");
+                    uint shift = op.getRot();
+                    uint data = op.getImmed();
+                    data = (data >> Convert.ToInt32(shift)) | (data << (32 - Convert.ToInt32(shift)));
+                    Console.WriteLine("Data: " + data.ToString());
+                    reg.setRegister(Rd, (uint)data);
+                    Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
+                    break;
+                case 1:
+                    Console.WriteLine("Case 1");
+                    uint num = computeShift(type);
+                    reg.setRegister(Rd, num);
+                    break;
+                case 2:
+                    Console.WriteLine("Case 2");
+                    uint num1 = computeShift(type);
+                    reg.setRegister(Rd, num1);
+                    break;
+            }
         }
        
 

@@ -140,7 +140,7 @@ Disassembly of section .interp:
             for (int i = 0; i < 16; ++i)
             {
                 regData_grid.Rows[i].Cells[0].Value = "R" + i.ToString();
-                string data = string.Format("{0:X8}", regs.getRegData(i));
+                string data = string.Format("{0:X8}", regs.getRegData(Convert.ToUInt32(i)));
                 regData_grid.Rows[i].Cells[1].Value = "0x" + data;
             }
 
