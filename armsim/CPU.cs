@@ -57,7 +57,7 @@ namespace armsim
 
 
             data = reg.getRegData(15);
-            
+            mem.ReadWord(data);
             ++step_number;
             return data;
         }

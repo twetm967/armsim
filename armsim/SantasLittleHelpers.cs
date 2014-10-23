@@ -17,18 +17,10 @@ namespace armsim
 
         //finds and saves all of the program headers 
         FileStream strm;
+        uint entry = 0;
 
-        public Computer Computer
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
-        }
-    
+
+        public uint getEntry() { return entry; }
         public bool decodeHeaders(string args, Memory mem)
         {
             List<ELFData> elfData = new List<ELFData>();
@@ -55,11 +47,13 @@ namespace armsim
                     elfHeader = ByteArrayToStructure<ELF>(data);//use this
 
                     Log.WriteToLog("Entry point: " + elfHeader.e_entry.ToString("X4"));
+                    entry = elfHeader.e_entry;
                     Log.WriteToLog("Number of program header entries: " + elfHeader.e_phnum);
 
                     // Read first program header entry
                     strm.Seek(elfHeader.e_phoff, SeekOrigin.Begin);//these two put them in for loop
                     Log.WriteToLog("Number of elf segment headers to read: " + elfHeader.e_phnum.ToString());
+                    
                     for (int i = 0; i < elfHeader.e_phnum; ++i)
                     {
                         data = new byte[elfHeader.e_phentsize];

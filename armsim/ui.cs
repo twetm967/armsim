@@ -15,7 +15,7 @@ namespace armsim
     public partial class ui : Form
     {
         private Computer comp;
-        private int address = 0;
+        private uint address = 0;
 
         public ui(ref Computer val)
         {
@@ -78,7 +78,7 @@ Disassembly of section .interp:
                 }
                 else
                 {
-                    stack_grid.Rows[0].Cells[i].Value = "0x" + string.Format("{0:X8}", comp.getMem().ReadWord((int)pointer));
+                    stack_grid.Rows[0].Cells[i].Value = "0x" + string.Format("{0:X8}", comp.getMem().ReadWord(pointer));
                     pointer += 4;
                 }
             }
@@ -271,7 +271,7 @@ Disassembly of section .interp:
         {
             try
             {
-                address = Convert.ToInt32(address_box.Text);
+                address = Convert.ToUInt32(address_box.Text);
                 updateForm();
             }
             catch

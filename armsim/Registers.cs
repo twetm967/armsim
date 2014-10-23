@@ -18,14 +18,14 @@ namespace armsim
         {
             Log.WriteToLog("Reading data from register: " + num.ToString());
             uint reg = (uint)num * 4;
-            return ReadWord((int)reg);
+            return ReadWord(reg);
         }
 
         public void setRegister(int reg, uint data)
         {
             Log.WriteToLog("Setting data to register: " + reg.ToString());
             uint regAddress = (uint)reg * 4;
-            WriteWord((int)regAddress, data);
+            WriteWord(regAddress, data);
         }
 
         public void incrementCounter()

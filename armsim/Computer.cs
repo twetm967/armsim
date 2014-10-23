@@ -40,6 +40,7 @@ namespace armsim
                 Console.WriteLine(option.getFilename());
 
                 load = elfs.decodeHeaders(option.getFilename(), memory);
+                regs.setRegister(15, elfs.getEntry());
             }
         }//end of constructor
 
@@ -66,7 +67,7 @@ namespace armsim
 
             try
             {
-                while (stop == false)
+                while (stop == false && num != 0)
                 {
                     num = cpu.fetch(this);
                     cpu.decode();
@@ -76,6 +77,7 @@ namespace armsim
             }
             catch
             {
+                Log.WriteToLog("The program failed.");
             }
         }
         public void step()

@@ -16,20 +16,6 @@ namespace armsim
     public class Memory
     {
         private byte[] Ram;
-
-        public Computer Computer
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
-        }
-
-
-
         public void setMem(int memsize)
         {
             Ram = new byte[memsize];
@@ -54,12 +40,12 @@ namespace armsim
         }
 
         //reads and returns a word from the ram array at a specified address
-        public uint ReadWord(Int32 address)
+        public uint ReadWord(uint address)
         {
             if (address % 4 == 0)
             {
                 Log.WriteToLog("Reading Word from address: " + address.ToString());
-                Int32 place = address;
+                uint place = address;
                 uint outP = 0;
                 byte[] store = new byte[4];
                 for (int i = 0; i < 4; ++i)
@@ -74,13 +60,13 @@ namespace armsim
         }
 
         //recieves and writes a word to ram at a specified address
-        public bool WriteWord(int address, uint data)
+        public bool WriteWord(uint address, uint data)
         {
             if (address % 4 == 0)
             {
                 Log.WriteToLog("Writing Word to address: " + address.ToString());
                 byte[] buff = new byte[4];
-                int place = address;
+                uint place = address;
                 buff = BitConverter.GetBytes(data);
                 //Array.Reverse(buff);
                 for (int i = 0; i < 4; ++i, ++place)
@@ -93,12 +79,12 @@ namespace armsim
         }
 
         //reads and returns a halfword from the ram array at a specified address
-        public ushort ReadHalfWord(Int32 address)
+        public ushort ReadHalfWord(uint address)
         {
             if (address % 2 == 0)
             {
                 Log.WriteToLog("Reading HalfWord from address: " + address.ToString());
-                Int32 place = address;
+                uint place = address;
                 ushort outP = 0;
                 byte[] store = new byte[2];
                 for (int i = 0; i < 2; ++i)
@@ -113,13 +99,13 @@ namespace armsim
         }
 
         //recieves and writes a halfword to ram at a specified address
-        public bool WriteHalfWord(Int32 address, short data)
+        public bool WriteHalfWord(uint address, short data)
         {
             if (address % 2 == 0)
             {
                 Log.WriteToLog("Writing HalfWord to address: " + address.ToString());
                 byte[] buff = new byte[2];
-                Int32 place = address;
+                uint place = address;
                 buff = BitConverter.GetBytes(data);
                 //Array.Reverse(buff);
                 for (int i = 0; i < 2; ++i, ++place)
@@ -131,12 +117,12 @@ namespace armsim
             return false;
         }
         //reads and returns a byte from the ram array at a specified address
-        public int ReadNibble(int address)
+        public int ReadNibble(uint address)
         {
             int num = 0;
             for (int i = 0; i < 4; ++i)
             {
-                bool b = TestFlag(0, address + i);
+                bool b = TestFlag(0, (int)address + i);
                 if (b == true)
                 {
                     num += (int)Math.Pow(2 , i);
@@ -146,7 +132,7 @@ namespace armsim
            //Console.WriteLine("Num: " + num.ToString());
            return num;
         }
-        public byte ReadByte(Int32 address)
+        public byte ReadByte(uint address)
         {
 
             Log.WriteToLog("Reading byte from address: " + address.ToString());
@@ -155,11 +141,11 @@ namespace armsim
         }
 
         //recieves and writes a byte to ram at a specified address
-        public bool WriteByte(Int32 address, byte data)
+        public bool WriteByte(uint address, byte data)
         {
             Log.WriteToLog("Writing byte to address: " + address.ToString());
             byte[] buff = new byte[1];
-            Int32 place = address;
+            uint place = address;
             buff = BitConverter.GetBytes(data);
             //Array.Reverse(buff);
             for (int i = 0; i < 1; ++i, ++place)
@@ -170,7 +156,7 @@ namespace armsim
 
         }
 
-        public bool TestFlag(int addr, int bit)
+        public bool TestFlag(uint addr, int bit)
         {
             byte[] bytes = new byte[4];
             bytes = BitConverter.GetBytes(ReadWord(addr));
@@ -179,7 +165,7 @@ namespace armsim
         }
 
         //sets a specified bit in the ram array
-        public void SetFlag(int addr, int bit, bool flag)
+        public void SetFlag(uint addr, int bit, bool flag)
         {
             if (bit < 0 || bit > 31)
             {
