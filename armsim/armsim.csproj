@@ -50,6 +50,7 @@
     <Compile Include="Instr_Branch.cs" />
     <Compile Include="Instr_DataProc.cs" />
     <Compile Include="Instr_LoadStore.cs" />
+    <Compile Include="Instr_Special_Case.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Memory.cs" />
     <Compile Include="Operand.cs" />

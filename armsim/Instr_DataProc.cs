@@ -178,6 +178,7 @@ namespace armsim
                     uint num1 = computeShift(type);
                     reg.setRegister(Rd, num1 - reg.getRegData(Rn));
                     break;
+            }
         }
         public void execRSB()
         {
@@ -192,7 +193,7 @@ namespace armsim
                     Console.WriteLine("Case 0");
                     int shift = op.getRot();
                     int data = op.getImmed();
-                    data = (data >> shift) | (data << (32 -shift));
+                    data = (data >> shift) | (data << (32 - shift));
                     Console.WriteLine("Data: " + data.ToString());
                     data += (int)reg.getRegData(Rn);
                     reg.setRegister(Rd, (uint)data);
@@ -208,6 +209,7 @@ namespace armsim
                     uint num1 = computeShift(type);
                     reg.setRegister(Rd, num1 + reg.getRegData(Rn));
                     break;
+            }
         }
         public void execADC()
         {
