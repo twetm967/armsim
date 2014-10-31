@@ -10,11 +10,18 @@ namespace armsim
     {
         Memory instr;
         Registers reg;
+        bool stop = false;
         int type;
+        uint rd;
+        uint rs;
+        uint rm;
+
+        public override bool getStop() { return stop; }
         public Instr_Special_Case(Memory inst, Registers r, int num)
         {
             instr = inst;
             reg = r;
+            type = num;
         }
 
         public static Instr_Special_Case isSpecial(Memory inst, Registers r)
@@ -56,6 +63,10 @@ namespace armsim
                     //decode for SWI
                     break;
                 case 2:
+                    //instr.PrintArray();
+                    rd = instr.ReadNibble(16);
+                    rs = instr.ReadNibble(8);
+                    rm = instr.ReadNibble(0);
                     //decode for MUL
                     break;
             }
@@ -76,12 +87,13 @@ namespace armsim
 
         public void execSWI()
         {
-
+            stop = true;
         }
 
         public void execMUL()
         {
-
+            uint data = reg.getRegData(rs) * reg.getRegData(rm);
+            reg.setRegister(rd, data);
         }
     }
 }

@@ -37,10 +37,12 @@ namespace armsim
             memory.setMem(option.getMem());
             if (option.getFilename() != "")
             {
-                Console.WriteLine(option.getFilename());
+                //Console.WriteLine(option.getFilename());
 
                 load = elfs.decodeHeaders(option.getFilename(), memory);
-                regs.setRegister(15, elfs.getEntry());
+                regs.setRegister(15, elfs.getEntry() + 8);
+                regs.setRegister(13, 28672);
+                //Console.WriteLine("entry: " + string.Format("{0:X8}", elfs.getEntry() + 8));
             }
         }//end of constructor
 
@@ -65,20 +67,15 @@ namespace armsim
         {
             uint num = 1;
 
-            try
-            {
-                while (stop == false && num != 0)
+            
+                while (stop == false)
                 {
                     num = cpu.fetch(this);
                     cpu.decode();
                     cpu.execute();
                     regs.incrementCounter();
                 }
-            }
-            catch
-            {
-                Log.WriteToLog("The program failed.");
-            }
+                //cpu.writeTrace();
         }
         public void step()
         {

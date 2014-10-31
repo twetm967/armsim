@@ -23,13 +23,13 @@ namespace armsim
             instruction.WriteWord(0, instr);
             instruction.PrintArray();
             Instr_Special_Case special = Instr_Special_Case.isSpecial(instruction, reg);
-            if (special != null)
+            if (special == null)
             {
                 if (instruction.TestFlag(0, 27) == false && instruction.TestFlag(0, 26) == false)
                 {
                     //Data Processing
                     //type = 0;
-                    Console.WriteLine("Data_Proc Instruction...");
+                    //Console.WriteLine("Data_Proc Instruction...");
                     return new Instr_DataProc(instruction, reg);
 
 
@@ -37,14 +37,14 @@ namespace armsim
                 else if (instruction.TestFlag(0, 27) == false && instruction.TestFlag(0, 26) == true)
                 {
                     //Load/store
-                    Console.WriteLine("Load/Store Instruction...");
+                    //Console.WriteLine("Load/Store Instruction...");
                     return new Instr_LoadStore(instruction, reg);
 
                 }
                 else if (instruction.TestFlag(0, 27) == true && instruction.TestFlag(0, 26) == false)
                 {
                     //Branching
-                    Console.WriteLine("Branching Instruction...");
+                    //Console.WriteLine("Branching Instruction...");
                     return new Instr_Branch(instruction, reg);
                 }
             }
@@ -58,6 +58,7 @@ namespace armsim
         }
         public abstract void decode(); //allows for override
         public abstract void exec(); //allows for override
+        public abstract bool getStop(); //allows for override
     }
 }
 

@@ -17,6 +17,7 @@ namespace armsim
         Memory instr;
         Registers reg;
         //constructor
+        public override bool getStop() { return false; }
         public Instr_LoadStore(Memory inst, Registers r)
         {
             instr = inst;

@@ -17,25 +17,16 @@ namespace armsim
         private int memSize = 32768; //holds the ram size from the user 
         private string fileName = ""; //holds the name of the file from the user to load
         private bool test = false; //this bool tells whether or not to run the unit tests
+        bool load = false;
+        bool exec = false;
+        bool autoTest = false;
         private bool arg = true;
-
-        public Computer Computer
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
-            }
-        }
-
-
 
         //*************Getters******************
         public int getMem() { return memSize; }
         public string getFilename() { return fileName; }
         public bool getTest() { return test; }
+        public bool getAutoTest() { return autoTest;}
         public void setFile(string str) { fileName = str; }
         //****************************************
 
@@ -45,6 +36,7 @@ namespace armsim
         {
             if (args.Length == 0)
             {
+                
                 Log.WriteToLog("No parameters were given.");
                 arg = false;
                 //Environment.Exit(0);
@@ -66,6 +58,7 @@ namespace armsim
                             {
                                 fileName = args[i + 1];
                                 Log.WriteToLog("File Name: " + fileName);
+                                load = true;
                                 ++i;
                             }
                             break;
@@ -81,6 +74,9 @@ namespace armsim
                             test = true;
                             Log.WriteToLog("Test Cases: True");
                             break;
+                        case "--exec":
+                            exec = true;
+                            break;
                         default:
                             Log.WriteToLog("You entered an invalid option.");
                             Environment.Exit(0);
@@ -88,6 +84,8 @@ namespace armsim
                     }//switch
 
                 }//for loop
+                if (exec == true && load == true) { autoTest = true;}
+                else { exec = false;}
             }//else
         }//parse
     }//class options

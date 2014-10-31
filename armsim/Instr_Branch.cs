@@ -16,6 +16,8 @@ namespace armsim
     {
         Memory instr;
         Registers reg;
+
+        public override bool getStop() { return false; }
         public Instr_Branch(Memory inst, Registers r)
         {
             instr = inst;

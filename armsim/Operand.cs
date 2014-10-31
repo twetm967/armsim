@@ -42,7 +42,7 @@ namespace armsim
             {
                 if (instr.TestFlag(0, 4) == false)//immediate shifted register, type = 1
                 {
-                    type = 2;
+                    type = 1;
                     Rm = instr.ReadNibble(0); 
                     for (int i = 5; i < 7; ++i) // gets the shift type
                     {
@@ -56,7 +56,7 @@ namespace armsim
                 }
                 else //register shifted register, type = 2
                 {
-                    type = 3;
+                    type = 2;
                     Rm = instr.ReadNibble(0);
                     for (int i = 5; i < 7; ++i) // gets the shift type
                     {
@@ -97,10 +97,12 @@ namespace armsim
                     num = (data << Convert.ToInt32(SAm));
                     break;
                 case 1: //ASR
-                    num = Convert.ToUInt32((Convert.ToInt32(data) >> Convert.ToInt32(SAm)));
+                    //int info = (int)data;
+                    
+                    num = (data >> Convert.ToInt32(SAm));
                     break;
                 case 2: //LSR
-                    num = (data >> Convert.ToInt32(SAm));
+                    num = (uint)(((int)data >> (int)SAm));
                     break;
                 case 3: //ROR*/RRX
                     if (getROR() == true) //ROR

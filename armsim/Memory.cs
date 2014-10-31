@@ -34,7 +34,7 @@ namespace armsim
             {
                 sBuilder.Append(MD[i].ToString("x2"));
             }
-            return sBuilder.ToString();
+            return sBuilder.ToString().ToUpper();
 
 
         }
@@ -50,7 +50,9 @@ namespace armsim
                 byte[] store = new byte[4];
                 for (int i = 0; i < 4; ++i)
                 {
+                    //Console.WriteLine(place.ToString());
                     store[i] = Ram[place];
+                    
                     ++place;
                 }
                 outP = (uint)BitConverter.ToInt32(store, 0);

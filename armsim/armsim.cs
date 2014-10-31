@@ -63,7 +63,8 @@ namespace armsim
             Computer comp = new Computer(options);
             
             bool testing = options.getTest();
-            if (testing == false)
+            bool autoTest = options.getAutoTest();
+            if (testing == false && autoTest == false)
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
@@ -72,7 +73,8 @@ namespace armsim
             else
             {
                 Test test = new Test();
-                test.TestMethods();
+                if (testing) { test.TestMethods(); }
+                else if (autoTest) { test.testRun(comp); }
             }
         }//Main
     }//class armsim

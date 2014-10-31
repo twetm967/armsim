@@ -139,9 +139,18 @@ Disassembly of section .interp:
             Registers regs = comp.getRegs();
             for (int i = 0; i < 16; ++i)
             {
-                regData_grid.Rows[i].Cells[0].Value = "R" + i.ToString();
-                string data = string.Format("{0:X8}", regs.getRegData(Convert.ToUInt32(i)));
-                regData_grid.Rows[i].Cells[1].Value = "0x" + data;
+                if (i == 15)
+                {
+                    regData_grid.Rows[i].Cells[0].Value = "R" + i.ToString();
+                    string data = string.Format("{0:X8}", regs.getRegData(Convert.ToUInt32(i))-8);
+                    regData_grid.Rows[i].Cells[1].Value = "0x" + data;
+                }
+                else
+                {
+                    regData_grid.Rows[i].Cells[0].Value = "R" + i.ToString();
+                    string data = string.Format("{0:X8}", regs.getRegData(Convert.ToUInt32(i)));
+                    regData_grid.Rows[i].Cells[1].Value = "0x" + data;
+                }
             }
 
         }
