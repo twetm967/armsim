@@ -42,7 +42,7 @@ namespace armsim
             Registers reg = new Registers();
             reg.setMem(64);
             uint number = 0xE3A02030;                  //00001100000001000000010111000111 0xE3A02030
-            Instruction inst = Instruction.decode(number, reg);
+            Instruction inst = Instruction.decode(number, reg, ram);
             inst.decode();
             inst.exec();
             Debug.Assert(reg.getRegData(2) == 48);

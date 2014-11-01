@@ -62,7 +62,7 @@ namespace armsim
         public void decode()
         {
             //this does nothing for this stage
-            inst = Instruction.decode(data, reg);
+            inst = Instruction.decode(data, reg, mem);
             inst.decode();
         }
 

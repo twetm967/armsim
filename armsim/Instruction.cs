@@ -15,7 +15,7 @@ namespace armsim
     //This class holds the information for instruction operations
     abstract class Instruction
     {
-        public static Instruction decode(uint instr, Registers reg)
+        public static Instruction decode(uint instr, Registers reg, Memory mem)
         {
            // int type = 0;
             Memory instruction = new Memory();
@@ -34,11 +34,11 @@ namespace armsim
 
 
                 }
-                else if (instruction.TestFlag(0, 27) == false && instruction.TestFlag(0, 26) == true)
+                else if ((instruction.TestFlag(0, 27) == false && instruction.TestFlag(0, 26) == true) || (instruction.TestFlag(0, 27) == true && instruction.TestFlag(0, 26) == false))
                 {
                     //Load/store
                     //Console.WriteLine("Load/Store Instruction...");
-                    return new Instr_LoadStore(instruction, reg);
+                    return new Instr_LoadStore(instruction, reg, mem);
 
                 }
                 else if (instruction.TestFlag(0, 27) == true && instruction.TestFlag(0, 26) == false)
