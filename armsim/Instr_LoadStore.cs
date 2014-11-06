@@ -48,8 +48,12 @@ namespace armsim
                 if (l) { type = 3; }
                 if (!l) { type = 4; }
             }
-            if (l) { type = 1; }
-            if (!l) { type = 2; }
+            else
+            {
+                if (l) { type = 1; }
+                if (!l) { type = 2; }
+            }
+            
 
         }
 
@@ -110,12 +114,15 @@ namespace armsim
             uint regData = 0;
 
             if (!u) { data = temp * -1; }
-            uint blob = (uint)data;
-            uint regis = reg.getRegData(rn);
+            else { data = (int)op2; }
+            uint blob = (uint)data;  //delete
+            uint regis = reg.getRegData(rn); //delete
             if (p) { address = reg.getRegData(rn) + (uint)data; }
             else { address = reg.getRegData(rn); }
 
-            if (b) { regData = reg.ReadByte(rd); }
+            
+
+            if (b) { regData = reg.ReadByte(rd * 4); }
             else { regData = reg.getRegData(rd); }
 
             mem.WriteWord(address, regData);
@@ -165,7 +172,7 @@ namespace armsim
                 if (instr.TestFlag(0, i))
                 {
                     //reg.setRegister((uint)i, mem.ReadWord(addr));
-                    mem.WriteWord((uint)i, reg.getRegData(addr));
+                    mem.WriteWord(addr, reg.getRegData((uint)i));
                     addr += 4;
                 }
             }
@@ -173,7 +180,7 @@ namespace armsim
             {
                 reg.setRegister(rn, reg.getRegData(rn) + (op2 * 4));
             }
-            else if (u && decBefore)
+            else if (w && decBefore)
             {
                 reg.setRegister(rn, reg.getRegData(rn) - (op2 * 4));
             }
