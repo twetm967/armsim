@@ -49,6 +49,7 @@
             this.stop_Btn = new System.Windows.Forms.Button();
             this.reset_Btn = new System.Windows.Forms.Button();
             this.exit_Btn = new System.Windows.Forms.Button();
+            this.file_Bx = new System.Windows.Forms.TextBox();
             this.splitContainer11 = new System.Windows.Forms.SplitContainer();
             this.splitContainer12 = new System.Windows.Forms.SplitContainer();
             this.data_box = new System.Windows.Forms.TextBox();
@@ -193,6 +194,7 @@
             this.splitContainer10.Panel1.Controls.Add(this.stop_Btn);
             this.splitContainer10.Panel1.Controls.Add(this.reset_Btn);
             this.splitContainer10.Panel1.Controls.Add(this.exit_Btn);
+            this.splitContainer10.Panel1.Controls.Add(this.file_Bx);
             // 
             // splitContainer10.Panel2
             // 
@@ -205,11 +207,11 @@
             // 
             this.flag_box.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flag_box.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.flag_box.Location = new System.Drawing.Point(0, 17);
+            this.flag_box.Location = new System.Drawing.Point(0, 37);
             this.flag_box.Multiline = true;
             this.flag_box.Name = "flag_box";
             this.flag_box.ReadOnly = true;
-            this.flag_box.Size = new System.Drawing.Size(104, 139);
+            this.flag_box.Size = new System.Drawing.Size(104, 119);
             this.flag_box.TabIndex = 11;
             // 
             // label1
@@ -254,7 +256,7 @@
             // 
             this.log_check.AutoSize = true;
             this.log_check.Dock = System.Windows.Forms.DockStyle.Top;
-            this.log_check.Location = new System.Drawing.Point(0, 0);
+            this.log_check.Location = new System.Drawing.Point(0, 20);
             this.log_check.Name = "log_check";
             this.log_check.Size = new System.Drawing.Size(104, 17);
             this.log_check.TabIndex = 6;
@@ -317,6 +319,15 @@
             this.exit_Btn.Text = "E&xit";
             this.exit_Btn.UseVisualStyleBackColor = true;
             this.exit_Btn.Click += new System.EventHandler(this.exit_Btn_Click);
+            // 
+            // file_Bx
+            // 
+            this.file_Bx.Dock = System.Windows.Forms.DockStyle.Top;
+            this.file_Bx.Location = new System.Drawing.Point(0, 0);
+            this.file_Bx.Name = "file_Bx";
+            this.file_Bx.ReadOnly = true;
+            this.file_Bx.Size = new System.Drawing.Size(104, 20);
+            this.file_Bx.TabIndex = 12;
             // 
             // splitContainer11
             // 
@@ -636,5 +647,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn word2;
         private System.Windows.Forms.DataGridViewTextBoxColumn word3;
         private System.Windows.Forms.DataGridViewTextBoxColumn word4;
+        private System.Windows.Forms.TextBox file_Bx;
     }
 }

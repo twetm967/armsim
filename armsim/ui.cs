@@ -42,6 +42,8 @@ Disassembly of section .interp:
             {
                 memory_Grid.Rows.Add();
             }
+            log_check.Checked = true;
+            comp.getCPU().setTrace(true);
             updateForm();
             if (comp.getOptions().getFilename() == "" || comp.getLoad() == false)
             {
@@ -64,8 +66,18 @@ Disassembly of section .interp:
             updateMem();
             updateFlags();
             updateStack();
+            updateFile();
         }
 
+        public void updateFile()
+        {
+            string str = comp.getOptions().getFilename();
+            if (str != "")
+            {
+                string[] filename = str.Split('\\');
+                file_Bx.Text = filename[filename.Count()-1];
+            }else { file_Bx.Text = "None";}
+        }
         public void updateStack()
         {
             uint pointer = 0;
@@ -218,7 +230,7 @@ Disassembly of section .interp:
             bool load = comp.getElf().decodeHeaders(comp.getOptions().getFilename(), comp.getMem());
             if (load == false)
             {
-                reset_Btn_Click(sender, e);
+                //reset_Btn_Click(sender, e);
             }
             updateForm();
             run_Btn.Enabled = true;
@@ -309,17 +321,9 @@ Disassembly of section .interp:
 
         private void reset_Btn_Click(object sender, EventArgs e)
         {
-            run_Btn.Enabled = false;
-            step_Btn.Enabled = false;
-            reset_Btn.Enabled = false;
-            stop_Btn.Enabled = false;
-            run_menu.Enabled = false;
-            step_menu.Enabled = false;
-            reset_strip.Enabled = false;
-            stop_menu.Enabled = false;
-            comp.getMem().clearRam();
-            comp.getRegs().clearRegs();
-            comp.getCPU().resetStep();
+            
+            comp = new Computer(comp.getOptions());
+            address = 0;
             updateForm();
         }
 
@@ -362,8 +366,5 @@ Disassembly of section .interp:
             this.Close();
         }
 
-        
-          
-        
     }
 }
