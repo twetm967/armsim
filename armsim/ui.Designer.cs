@@ -372,6 +372,7 @@
             this.data_box.Multiline = true;
             this.data_box.Name = "data_box";
             this.data_box.ReadOnly = true;
+            this.data_box.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.data_box.Size = new System.Drawing.Size(470, 164);
             this.data_box.TabIndex = 0;
             this.data_box.Text = "This box contains stuff!";

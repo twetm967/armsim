@@ -48,6 +48,7 @@ namespace armsim
 
         /********************Getters*************************/
         public CPU getCPU() { return cpu; }
+        public bool getStop() { return stop; }
         public Options getOptions() { return option; }
         public Memory getMem() { return memory; }
         public Registers getRegs() { return regs; }
@@ -79,10 +80,13 @@ namespace armsim
         }
         public void step()
         {
-            cpu.fetch(this);
-            cpu.decode();
-            cpu.execute();
-            regs.incrementCounter();
+            if (!stop)
+            {
+                cpu.fetch(this);
+                cpu.decode();
+                cpu.execute();
+                regs.incrementCounter();
+            }
         }
 
     }

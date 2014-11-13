@@ -19,6 +19,7 @@ namespace armsim
         bool c = false;
         bool f = false;
         private uint data;
+        string dissA = "";
         int step_number = 0;
         static StreamWriter trace = new StreamWriter("trace.log", false);
         
@@ -34,6 +35,7 @@ namespace armsim
         public bool getZ() { return z; }
         public bool getC() { return c; }
         public bool getF() { return f; }
+        public string getDiss() { return dissA; }
         /***********setters**************/
         public void setN(bool b) { n = b; }
         public void setZ(bool b) { z = b; }
@@ -69,6 +71,7 @@ namespace armsim
         public void execute()
         {
             inst.exec();
+            dissA += inst.toString() + " \r\n";
             if (inst.getStop() == true) { comp.setStop(true); }
             if (tracer == true)
             {

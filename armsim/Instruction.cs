@@ -59,6 +59,7 @@ namespace armsim
         public abstract void decode(); //allows for override
         public abstract void exec(); //allows for override
         public abstract bool getStop(); //allows for override
+        public abstract string toString(); //allows for override
     }
 }
 

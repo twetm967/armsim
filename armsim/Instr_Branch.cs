@@ -15,9 +15,11 @@ namespace armsim
     class Instr_Branch : Instruction
     {
         Memory instr;
+        string diss = "Non-Implemented Branching Instruction";
         Registers reg;
 
         public override bool getStop() { return false; }
+        public override string toString() { return diss; }
         public Instr_Branch(Memory inst, Registers r)
         {
             instr = inst;

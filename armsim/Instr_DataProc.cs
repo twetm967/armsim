@@ -17,6 +17,8 @@ namespace armsim
         //string opcode = "";
         uint opcode, Rn, Rd, cond;
         Operand op;
+        uint data = 0;
+        string diss = "";
         Registers reg;
         Memory instr;
         bool s = false;
@@ -28,81 +30,123 @@ namespace armsim
             reg = r;
         }
 
-        
+        public override string toString() { return diss; }
         //sets instance variables then calls exec()
         public override void decode()
-        {
-            //Console.WriteLine("Running Data_Proc decode..."); 
+        { 
             Rn = instr.ReadNibble(16);
-            //Console.WriteLine("RN: " + Rn.ToString());
             Rd = instr.ReadNibble(12);
             cond = instr.ReadNibble(28);
             opcode = instr.ReadNibble(21);
-            //Console.WriteLine("Opcode: " + opcode.ToString());
             s = instr.TestFlag(0, 25);
             op = new Operand(instr, s, reg);
-            //exec();
 
         }
 
+        public void makeDiss()
+        {
+            uint type = op.getType();
+            switch (type)
+            {
+                case 0: //immediate
+                    if (opcode == 13 || opcode == 15)
+                    {
+                        diss += "r" + Rd.ToString() + ", #" + data.ToString();
+                    }
+                    else
+                    {
+                        diss += "r" + Rd.ToString() + ", r" + Rn.ToString() + ", #" + data.ToString();
+                    }
+                    
+                    break;
+                case 1:
+                    diss += "r" + Rd.ToString() + /*", r" + Rn.ToString() +*/ ", r" + op.getRm().ToString(); 
+                    if (op.getShiftAm() != 0)
+                    {
+                        diss += ", " + op.getShifter() + " #" + op.getShiftAm().ToString();
+                    }
+                    break;
+                case 2:
+                    diss += "r" + Rd.ToString() + /*", r" + Rn.ToString() +*/ ", r" + op.getRm().ToString() ;
+                    if (op.getShiftAm() != 0)
+                    {
+                        diss += ", " + op.getShifter() + " #" + op.getRs().ToString();
+                    }
+                    break;
+            }
+        }
         //uses switch and instance variables to call the corresct execute command
         public override void exec()
         {
             switch (opcode)
             {
                 case 0:
+                    diss = "and ";
                     execAND();
                     break;
                 case 1:
+                    diss = "eor ";
                     execEOR();
                     break;
                 case 2:
-                    Console.WriteLine("SUB");
+                    diss = "sub ";
                     execSUB();
                     break;
                 case 3:
+                    diss = "srb ";
                     execRSB();
                     break;
                 case 4:
-                    Console.WriteLine("ADD");
+                    diss = "add ";
                     execADD();
                     break;
                 case 5:
+                    diss = "adc ";
                     execADC();
                     break;
                 case 6:
+                    diss = "sbc ";
                     execSBC();
                     break;
                 case 7:
+                    diss = "rsc ";
                     execRSC();
                     break;
                 case 8:
+                    diss = "tst ";
                     execTST();
                     break;
                 case 9:
+                    diss = "teq ";
                     execTEQ();
                     break;
                 case 10:
+                    diss = "cmp ";
                     execCMP();
                     break;
                 case 11:
+                    diss = "cmn ";
                     execCMN();
                     break;
                 case 12:
+                    diss = "orr ";
                     execORR();
                     break;
                 case 13:
-                    Console.WriteLine("MOV");
+                    diss = "mov ";
                     execMOV();
                     break;
                 case 14:
+                    diss = "bic ";
                     execBIC();
                     break;
                 case 15:
+                    diss = "mvn ";
                     execMVN();
                     break;
 
             }
+            makeDiss();
         }
 
         public void execAND()
@@ -111,22 +155,16 @@ namespace armsim
            switch (type)
            {
                case 0: //immediate
-                   //Console.WriteLine("Case 0");
                    uint shift = op.getRot();
-                   uint data = op.getImmed();
+                   data = op.getImmed();
                    data = (data >> Convert.ToInt32(shift)) | (data << (32 - Convert.ToInt32(shift)));
-                   //Console.WriteLine("Data: " + data.ToString());
-                   //data += (int)reg.getRegData(Rn);
                    reg.setRegister(Rd, data & reg.getRegData(Rn));
-                   //Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
                    break;
                case 1:
-                   //Console.WriteLine("Case 1");
                    uint num = op.computeShift(type);
                    reg.setRegister(Rd, num & reg.getRegData(Rn));
                    break;
                case 2:
-                   //Console.WriteLine("Case 2");
                    uint num1 = op.computeShift(type);
                    reg.setRegister(Rd, num1 & reg.getRegData(Rn));
                    break;
@@ -139,22 +177,16 @@ namespace armsim
             switch (type)
             {
                 case 0: //immediate
-                    //Console.WriteLine("Case 0");
                     uint shift = op.getRot();
-                    uint data = op.getImmed();
+                    data = op.getImmed();
                     data = (data >> Convert.ToInt32(shift)) | (data << (32 - Convert.ToInt32(shift)));
-                    //Console.WriteLine("Data: " + data.ToString());
-                    //data += (int)reg.getRegData(Rn);
                     reg.setRegister(Rd, data ^ reg.getRegData(Rn));
-                    //Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
                     break;
                 case 1:
-                    //Console.WriteLine("Case 1");
                     uint num = op.computeShift(type);
                     reg.setRegister(Rd, num ^ reg.getRegData(Rn));
                     break;
                 case 2:
-                    //Console.WriteLine("Case 2");
                     uint num1 = op.computeShift(type);
                     reg.setRegister(Rd, num1 ^ reg.getRegData(Rn));
                     break;
@@ -166,22 +198,16 @@ namespace armsim
             switch (type)
             {
                 case 0: //immediate
-                    //Console.WriteLine("Case 0");
                     uint shift = op.getRot();
-                    uint data = op.getImmed();
+                    data = op.getImmed();
                     data = (data >> Convert.ToInt32(shift)) | (data << (32 - Convert.ToInt32(shift)));
-                    //Console.WriteLine("Data: " + data.ToString());
-                    //data += (int)reg.getRegData(Rn);
                     reg.setRegister(Rd, reg.getRegData(Rn) - data);
-                    //Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
                     break;
                 case 1:
-                    //Console.WriteLine("Case 1");
                     uint num = op.computeShift(type);
                     reg.setRegister(Rd, reg.getRegData(Rn)- num);
                     break;
                 case 2:
-                    //Console.WriteLine("Case 2");
                     uint num1 = op.computeShift(type);
                     reg.setRegister(Rd, reg.getRegData(Rn) - num1);
                     break;
@@ -193,22 +219,17 @@ namespace armsim
             switch (type)
             {
                 case 0: //immediate
-                    //Console.WriteLine("Case 0");
                     uint shift = op.getRot();
-                    uint data = op.getImmed();
+                    data = op.getImmed();
                     data = (data >> Convert.ToInt32(shift)) | (data << (32 - Convert.ToInt32(shift)));
-                    //Console.WriteLine("Data: " + data.ToString());
-                    //data += (int)reg.getRegData(Rn);
                     reg.setRegister(Rd, data - reg.getRegData(Rn));
                     Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
                     break;
                 case 1:
-                    //Console.WriteLine("Case 1");
                     uint num = op.computeShift(type);
                     reg.setRegister(Rd, num - reg.getRegData(Rn));
                     break;
                 case 2:
-                    //Console.WriteLine("Case 2");
                     uint num1 = op.computeShift(type);
                     reg.setRegister(Rd, num1 - reg.getRegData(Rn));
                     break;
@@ -220,22 +241,17 @@ namespace armsim
             switch (type)
             {
                 case 0: //immediate
-                    //Console.WriteLine("Case 0");
                     uint shift = op.getRot();
-                    uint data = op.getImmed();
+                    data = op.getImmed();
                     data = (data >> Convert.ToInt32(shift)) | (data << (32 - Convert.ToInt32(shift)));
-                    //Console.WriteLine("Data: " + data.ToString());
                     data += reg.getRegData(Rn);
                     reg.setRegister(Rd, data);
-                    //Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
                     break;
                 case 1:
-                    //Console.WriteLine("Case 1");
                     uint num = op.computeShift(type);
                     reg.setRegister(Rd, num + reg.getRegData(Rn));
                     break;
                 case 2:
-                    //Console.WriteLine("Case 2");
                     uint num1 = op.computeShift(type);
                     reg.setRegister(Rd, num1 + reg.getRegData(Rn));
                     break;
@@ -275,22 +291,16 @@ namespace armsim
             switch (type)
             {
                 case 0: //immediate
-                    //Console.WriteLine("Case 0");
                     uint shift = op.getRot();
-                    uint data = op.getImmed();
+                    data = op.getImmed();
                     data = (data >> Convert.ToInt32(shift)) | (data << (32 - Convert.ToInt32(shift)));
-                    //Console.WriteLine("Data: " + data.ToString());
-                    //data += (int)reg.getRegData(Rn);
                     reg.setRegister(Rd, data | reg.getRegData(Rn));
-                    //Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
                     break;
                 case 1:
-                    //Console.WriteLine("Case 1");
                     uint num = op.computeShift(type);
                     reg.setRegister(Rd, num | reg.getRegData(Rn));
                     break;
                 case 2:
-                    //Console.WriteLine("Case 2");
                     uint num1 = op.computeShift(type);
                     reg.setRegister(Rd, num1 | reg.getRegData(Rn));
                     break;
@@ -298,26 +308,20 @@ namespace armsim
         }
         public void execMOV()
         {
-            //do fun things
             uint type = op.getType();
             switch (type)
             {
                 case 0: //immediate
-                    //Console.WriteLine("Case 0");
                     uint shift = op.getRot();
-                    uint data = op.getImmed();
+                    data = op.getImmed();
                     data = (data >> Convert.ToInt32(shift)) | (data << (32 - Convert.ToInt32(shift)));
-                    //Console.WriteLine("Data: " + data.ToString());
                     reg.setRegister(Rd, (uint)data);
-                    //Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
                     break;
                 case 1:
-                    //Console.WriteLine("Case 1");
                     uint num = op.computeShift(type);
                     reg.setRegister(Rd, num);
                     break;
                 case 2:
-                    //Console.WriteLine("Case 2");
                     uint num1 = op.computeShift(type);
                     reg.setRegister(Rd, num1);
                     break;
@@ -330,22 +334,16 @@ namespace armsim
             switch (type)
             {
                 case 0: //immediate
-                    //Console.WriteLine("Case 0");
                     uint shift = op.getRot();
-                    uint data = op.getImmed();
+                    data = op.getImmed();
                     data = (data >> Convert.ToInt32(shift)) | (data << (32 - Convert.ToInt32(shift)));
-                    //Console.WriteLine("Data: " + data.ToString());
-                    //data += (int)reg.getRegData(Rn);
                     reg.setRegister(Rd, data & ~reg.getRegData(Rn));
-                    //Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
                     break;
                 case 1:
-                    //Console.WriteLine("Case 1");
                     uint num = op.computeShift(type);
                     reg.setRegister(Rd, num & ~reg.getRegData(Rn));
                     break;
                 case 2:
-                    //Console.WriteLine("Case 2");
                     uint num1 = op.computeShift(type);
                     reg.setRegister(Rd, num1 & ~reg.getRegData(Rn));
                     break;
@@ -357,21 +355,16 @@ namespace armsim
             switch (type)
             {
                 case 0: //immediate
-                    //Console.WriteLine("Case 0");
                     uint shift = op.getRot();
-                    uint data = op.getImmed();
+                    data = op.getImmed();
                     data = (data >> Convert.ToInt32(shift)) | (data << (32 - Convert.ToInt32(shift)));
-                    //Console.WriteLine("Data: " + data.ToString());
                     reg.setRegister(Rd, ~data);
-                    //Console.WriteLine("R" + Rd + ": " + reg.getRegData(Rd));
                     break;
                 case 1:
-                    //Console.WriteLine("Case 1");
                     uint num = op.computeShift(type);
                     reg.setRegister(Rd, ~num);
                     break;
                 case 2:
-                    //Console.WriteLine("Case 2");
                     uint num1 = op.computeShift(type);
                     reg.setRegister(Rd, ~num1);
                     break;

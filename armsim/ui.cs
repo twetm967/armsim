@@ -22,7 +22,7 @@ namespace armsim
             InitializeComponent();
             this.Focus();
             comp = val;
-            data_box.Text = @"factorial:     file format elf64-x86-64
+            /*data_box.Text = @"factorial:     file format elf64-x86-64
 Disassembly of section .interp:
 0000000000400238 <.interp> (bad)
 0000000000400239 <.interp+0x1> insb   (%dx),%es:(%rdi)
@@ -33,7 +33,8 @@ Disassembly of section .interp:
 000000000040024a <.interp+0x12> ss
 000000000040024b <.interp+0x13> sub    $0x732e3436,%eax
 0000000000400250 <.interp+0x18> outsl  %ds:(%rsi),(%dx)
-0000000000400251 <.interp+0x19> xor    %cs:(%rax),%al";
+0000000000400251 <.interp+0x19> xor    %cs:(%rax),%al";*/
+            data_box.Text = "";
             for (int i = 0; i < 15; ++i)
             {
                 regData_grid.Rows.Add();
@@ -67,6 +68,18 @@ Disassembly of section .interp:
             updateFlags();
             updateStack();
             updateFile();
+            updateDiss();
+            if (comp.getStop())
+            {
+                run_Btn.Enabled = false;
+                step_Btn.Enabled = false;
+            }
+        }
+
+        public void updateDiss()
+        {
+            data_box.Text = "";
+            data_box.AppendText(comp.getCPU().getDiss());
         }
 
         public void updateFile()
@@ -275,7 +288,10 @@ Disassembly of section .interp:
             stop_Btn.Enabled = true;
 
             comp.setStop(false);
-            new Thread(comp.run).Start();
+
+            Thread th = new Thread(comp.run);
+            th.Start();
+            //th.
             updateForm();
             run_Btn.Enabled = true;
             step_Btn.Enabled = true;

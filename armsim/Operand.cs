@@ -13,6 +13,7 @@ namespace armsim
         Registers reg;
         bool ifShift = false;
         bool ROR = true;
+        string shifter = "";
         uint shiftType, Rm, Rs, immed, rot, shiftAm, type = 0;
 
         public Operand(Memory mem, bool b, Registers r)
@@ -81,36 +82,37 @@ namespace armsim
             
             uint SAm = 0;
             uint data = reg.getRegData(Rm);
-            if (type == 1) //immediate shift register
+            
+            if (type !=1) //register shifted register
             {
-                SAm = shiftAm;
-            }
-            else //register shifted register
-            {
-                SAm = reg.getRegData(Rs);
+                shiftAm = reg.getRegData(Rs);
             }
             //uint shiftType = shiftType;
 
             switch (shiftType)
             {
                 case 0: //LSL
-                    num = (data << Convert.ToInt32(SAm));
+                    shifter = "lsl";
+                    num = (data << Convert.ToInt32(shiftAm));
                     break;
                 case 1: //ASR
                     //int info = (int)data;
-                    
-                    num = (data >> Convert.ToInt32(SAm));
+                    shifter = "asr";
+                    num = (data >> Convert.ToInt32(shiftAm));
                     break;
                 case 2: //LSR
-                    num = (uint)(((int)data >> (int)SAm));
+                    shifter = "lsr";
+                    num = (uint)(((int)data >> (int)shiftAm));
                     break;
                 case 3: //ROR*/RRX
                     if (getROR() == true) //ROR
                     {
-                        num = (data >> Convert.ToInt32(SAm)) | (data << (32 - Convert.ToInt32(SAm)));
+                        shifter = "ror";
+                        num = (data >> Convert.ToInt32(shiftAm)) | (data << (32 - Convert.ToInt32(shiftAm)));
                     }
                     else //RRX
                     {
+                        shifter = "rrx";
                         num = (data >> 1) | (data << (32 - 1));
                     }
                     break;
@@ -126,6 +128,7 @@ namespace armsim
         public uint getRs() { return Rs; }
         public uint getImmed() { return immed; }
         public uint getRot() { return rot; }
+        public string getShifter() { return shifter; }
         public uint getShiftAm() { return shiftAm; }
         public uint getType() { return type; }
         public uint getShiftType() { return shiftType; }

@@ -12,11 +12,14 @@ namespace armsim
         Registers reg;
         bool stop = false;
         int type;
+        string diss = "Non-Implemented Special Instruction";
         uint rd;
         uint rs;
         uint rm;
 
         public override bool getStop() { return stop; }
+        public override string toString() { return diss; }
+       
         public Instr_Special_Case(Memory inst, Registers r, int num)
         {
             instr = inst;
@@ -37,6 +40,15 @@ namespace armsim
             return null;
         }
 
+        public uint getChunk(uint start, uint end)
+        {
+            uint num = 0;
+            for (uint i = start; i <= end; ++i)
+            {
+                if (instr.TestFlag(0, (int)i)) { num += Convert.ToUInt32(Math.Pow(2, (i - start))); }
+            }
+            return num;
+        }
         public static bool checkMUL(Memory inst)
         {
             uint num1 = 0;
@@ -88,12 +100,14 @@ namespace armsim
         public void execSWI()
         {
             stop = true;
+            diss = "swi " + getChunk(0, 23).ToString();
         }
 
         public void execMUL()
         {
             uint data = reg.getRegData(rs) * reg.getRegData(rm);
             reg.setRegister(rd, data);
+            diss = "mul r" + rd.ToString() + ", r" + rm.ToString() + ", r" + rs.ToString(); 
         }
     }
 }
