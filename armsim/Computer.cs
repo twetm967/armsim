@@ -19,9 +19,11 @@ namespace armsim
         Options option;
         CPU cpu;
         Memory memory;
+        Memory flags;
         Registers regs;
         SantasLittleHelpers elfs;
         Log logs;
+        ui form;
         //do more fun things
 
         public Computer(Options nOp)
@@ -37,12 +39,9 @@ namespace armsim
             memory.setMem(option.getMem());
             if (option.getFilename() != "")
             {
-                //Console.WriteLine(option.getFilename());
-
                 load = elfs.decodeHeaders(option.getFilename(), memory);
                 regs.setRegister(15, elfs.getEntry() + 8);
                 regs.setRegister(13, 28672);
-                //Console.WriteLine("entry: " + string.Format("{0:X8}", elfs.getEntry() + 8));
             }
         }//end of constructor
 
@@ -63,6 +62,7 @@ namespace armsim
         public void setElf(SantasLittleHelpers val) { elfs = val; }
         public void setLog(Log val) { logs = val; }
         public void setStop(bool b) { stop = b; }
+        public void setForm(ui f) { form = f; }
 
         public void run()
         {
@@ -77,6 +77,14 @@ namespace armsim
                     regs.incrementCounter();
                 }
                 //cpu.writeTrace();
+                try
+                {
+                    if (!option.getAutoTest())
+                    {
+                        form.Invoke(form.delegate1);
+                    }
+                }
+                catch { }
         }
         public void step()
         {

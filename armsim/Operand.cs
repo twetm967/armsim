@@ -80,12 +80,16 @@ namespace armsim
         {
             uint num = 0;
             
-            uint SAm = 0;
             uint data = reg.getRegData(Rm);
+
             
             if (type !=1) //register shifted register
             {
                 shiftAm = reg.getRegData(Rs);
+            }
+            if (type == 0)
+            {
+                return (immed >> (int)rot) | (immed << (32 - (int)rot)); ;
             }
             //uint shiftType = shiftType;
 
@@ -93,12 +97,12 @@ namespace armsim
             {
                 case 0: //LSL
                     shifter = "lsl";
-                    num = (data << Convert.ToInt32(shiftAm));
+                    num = (data << (int)shiftAm);
                     break;
                 case 1: //ASR
                     //int info = (int)data;
                     shifter = "asr";
-                    num = (data >> Convert.ToInt32(shiftAm));
+                    num = (data >> (int)shiftAm);
                     break;
                 case 2: //LSR
                     shifter = "lsr";
@@ -108,7 +112,7 @@ namespace armsim
                     if (getROR() == true) //ROR
                     {
                         shifter = "ror";
-                        num = (data >> Convert.ToInt32(shiftAm)) | (data << (32 - Convert.ToInt32(shiftAm)));
+                        num = (data >> (int)shiftAm) | (data << (32 - (int)shiftAm));
                     }
                     else //RRX
                     {

@@ -19,13 +19,16 @@ namespace armsim
         OperandTwo op;
         string diss = "Non-Implemented Load/Store Instruction";
         Memory instr, mem;
+        CPU cpu;
         Registers reg;
         //constructor
         public override bool getStop() { return false; }
-        public Instr_LoadStore(Memory inst, Registers r, Memory m)
+        public override uint getCond() { return cond; }
+        public Instr_LoadStore(Memory inst, Registers r, Memory m, CPU f)
         {
             instr = inst;
             reg = r;
+            cpu = f;
             mem = m;
         }
         public override string toString() { return diss; }

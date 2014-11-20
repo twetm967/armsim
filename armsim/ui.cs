@@ -15,25 +15,19 @@ namespace armsim
     public partial class ui : Form
     {
         private Computer comp;
+        bool change = true;
         private uint address = 0;
+        public delegate void UpdateFormDelegate();
+        public UpdateFormDelegate delegate1;
 
         public ui(ref Computer val)
         {
             InitializeComponent();
             this.Focus();
+            //Delegate hookups
+            delegate1 = new UpdateFormDelegate(updateForm);
             comp = val;
-            /*data_box.Text = @"factorial:     file format elf64-x86-64
-Disassembly of section .interp:
-0000000000400238 <.interp> (bad)
-0000000000400239 <.interp+0x1> insb   (%dx),%es:(%rdi)
-000000000040023a <.interp+0x2> imul   $0x646c2f34,0x36(%rdx),%esp
-0000000000400241 <.interp+0x9> sub    $0x756e696c,%eax
-0000000000400246 <.interp+0xe> js     0000000000400275 <_init-0x17b>
-0000000000400248 <.interp+0x10> js     0000000000400282 <_init-0x16e>
-000000000040024a <.interp+0x12> ss
-000000000040024b <.interp+0x13> sub    $0x732e3436,%eax
-0000000000400250 <.interp+0x18> outsl  %ds:(%rsi),(%dx)
-0000000000400251 <.interp+0x19> xor    %cs:(%rax),%al";*/
+            this.AcceptButton = address_Btn;
             data_box.Text = "";
             for (int i = 0; i < 15; ++i)
             {
@@ -45,6 +39,7 @@ Disassembly of section .interp:
             }
             log_check.Checked = true;
             comp.getCPU().setTrace(true);
+            V_CBox.IsAccessible = false;
             updateForm();
             if (comp.getOptions().getFilename() == "" || comp.getLoad() == false)
             {
@@ -63,6 +58,10 @@ Disassembly of section .interp:
 
         public void updateForm()
         {
+            if (change)
+            {
+                address = comp.getRegs().getRegData(15);
+            }
             updateRegs();
             updateMem();
             updateFlags();
@@ -71,8 +70,16 @@ Disassembly of section .interp:
             updateDiss();
             if (comp.getStop())
             {
+                
+
                 run_Btn.Enabled = false;
                 step_Btn.Enabled = false;
+                reset_Btn.Enabled = true;
+                run_menu.Enabled = false;
+                step_menu.Enabled = false;
+                reset_strip.Enabled = true;
+                stop_menu.Enabled = false;
+                stop_Btn.Enabled = false;
             }
         }
 
@@ -115,47 +122,10 @@ Disassembly of section .interp:
         {
             //update the flags
             CPU cpu = comp.getCPU();
-            string str = "Flags:\r\n***********\r\n";
-            //test N flag
-            if (cpu.getN() == true)
-            {
-                str += "N: 1\r\n\r\n";
-            }
-            else
-            {
-                str += "N: 0\r\n\r\n";
-            }
-            //test Z flag
-            if (cpu.getZ() == true)
-            {
-                str += "Z: 1\r\n\r\n";
-            }
-            else
-            {
-                str += "Z: 0\r\n\r\n";
-            }
-            //test C flag
-            if (cpu.getC() == true)
-            {
-                str += "C: 1\r\n\r\n";
-            }
-            else
-            {
-                str += "C: 0\r\n\r\n";
-            }
-            //test F flag
-            if (cpu.getF() == true)
-            {
-                str += "F: 1\r\n\r\n";
-            }
-            else
-            {
-                str += "F: 0\r\n\r\n";
-            }
-           
-
-            flag_box.Text = str;
-
+            N_CBox.Checked = cpu.getN();
+            Z_CBox.Checked = cpu.getZ();
+            C_CBox.Checked = cpu.getC();
+            V_CBox.Checked = cpu.getV();
         }
 
         public void updateRegs()
@@ -245,6 +215,7 @@ Disassembly of section .interp:
             {
                 //reset_Btn_Click(sender, e);
             }
+            comp.getCPU().getFlags().clearRam();
             updateForm();
             run_Btn.Enabled = true;
             step_Btn.Enabled = true;
@@ -258,22 +229,9 @@ Disassembly of section .interp:
 
         private void step_Btn_Click(object sender, EventArgs e)
         {
-            run_Btn.Enabled = false;
-            step_Btn.Enabled = false;
-            reset_Btn.Enabled = false;
-            run_menu.Enabled = false;
-            step_menu.Enabled = false;
-            reset_strip.Enabled = false;
             comp.setStop(false);
-            new Thread(comp.step).Start();
+            comp.step();
             updateForm();
-            run_Btn.Enabled = true;
-            step_Btn.Enabled = true;
-            reset_Btn.Enabled = true;
-            run_menu.Enabled = true;
-            step_menu.Enabled = true;
-            reset_strip.Enabled = true;
-
         }
 
         private void run_Btn_Click(object sender, EventArgs e)
@@ -289,18 +247,8 @@ Disassembly of section .interp:
 
             comp.setStop(false);
 
-            Thread th = new Thread(comp.run);
-            th.Start();
-            //th.
-            updateForm();
-            run_Btn.Enabled = true;
-            step_Btn.Enabled = true;
-            reset_Btn.Enabled = true;
-            run_menu.Enabled = true;
-            step_menu.Enabled = true;
-            reset_strip.Enabled = true;
-            stop_menu.Enabled = false;
-            stop_Btn.Enabled = false;
+            new Thread(comp.run).Start();
+            
 
         }
 
@@ -309,6 +257,7 @@ Disassembly of section .interp:
             try
             {
                 address = Convert.ToUInt32(address_box.Text);
+                change = false;
                 updateForm();
             }
             catch
@@ -340,6 +289,10 @@ Disassembly of section .interp:
             
             comp = new Computer(comp.getOptions());
             address = 0;
+            run_Btn.Enabled = true;
+            step_Btn.Enabled = true;
+            step_menu.Enabled = true;
+            run_menu.Enabled = true;
             updateForm();
         }
 

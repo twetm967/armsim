@@ -14,22 +14,33 @@ namespace armsim
 {
     class Instr_DataProc : Instruction
     {
-        //string opcode = "";
         uint opcode, Rn, Rd, cond;
         Operand op;
         uint data = 0;
         string diss = "";
         Registers reg;
         Memory instr;
+        CPU cpu;
         bool s = false;
 
         public override bool getStop() { return false; }
-        public Instr_DataProc(Memory inst, Registers r)
+        public override uint getCond() { return cond; }
+        
+        public Instr_DataProc(Memory inst, Registers r, CPU f)
         {
             instr = inst;
             reg = r;
+            cpu = f;
         }
-
+        public uint getChunk(uint start, uint end)
+        {
+            uint num = 0;
+            for (uint i = start; i <= end; ++i)
+            {
+                if (instr.TestFlag(0, (int)i)) { num += Convert.ToUInt32(Math.Pow(2, (i - start))); }
+            }
+            return num;
+        }
         public override string toString() { return diss; }
         //sets instance variables then calls exec()
         public override void decode()
@@ -49,7 +60,7 @@ namespace armsim
             switch (type)
             {
                 case 0: //immediate
-                    if (opcode == 13 || opcode == 15)
+                    if (opcode == 13 || opcode == 15 || opcode == 10)
                     {
                         diss += "r" + Rd.ToString() + ", #" + data.ToString();
                     }
@@ -60,14 +71,14 @@ namespace armsim
                     
                     break;
                 case 1:
-                    diss += "r" + Rd.ToString() + /*", r" + Rn.ToString() +*/ ", r" + op.getRm().ToString(); 
+                    diss += "r" + Rd.ToString() + ", r" + op.getRm().ToString(); 
                     if (op.getShiftAm() != 0)
                     {
                         diss += ", " + op.getShifter() + " #" + op.getShiftAm().ToString();
                     }
                     break;
                 case 2:
-                    diss += "r" + Rd.ToString() + /*", r" + Rn.ToString() +*/ ", r" + op.getRm().ToString() ;
+                    diss += "r" + Rd.ToString() + ", r" + op.getRm().ToString() ;
                     if (op.getShiftAm() != 0)
                     {
                         diss += ", " + op.getShifter() + " #" + op.getRs().ToString();
@@ -146,7 +157,7 @@ namespace armsim
                     break;
 
             }
-            makeDiss();
+            makeDiss(); 
         }
 
         public void execAND()
@@ -279,6 +290,27 @@ namespace armsim
         }
         public void execCMP()
         {
+            uint type = op.getType();
+            uint num = op.computeShift(type);
+            uint info = reg.getRegData(Rn);
+            uint data =  info - num;
+            if ((data >> 31) == 1) { cpu.setN(true); } 
+            else { cpu.setN(false); }
+
+            if (num > info) { cpu.setC(false); }
+            else { cpu.setC(true); }
+
+            if (data == 0) { cpu.setZ(true); }
+            else { cpu.setZ(false); }
+
+            if (((int)info >= 0 && (int)num < 0 && (int)data < 0) || ((int)info < 0 && (int)num >= 0 && (int)data >= 0)) 
+            { 
+                cpu.setV(true);
+            }
+            else
+            {
+                cpu.setV(false);
+            }
 
         }
         public void execCMN()

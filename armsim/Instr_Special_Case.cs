@@ -9,33 +9,35 @@ namespace armsim
     class Instr_Special_Case : Instruction
     {
         Memory instr;
+        CPU cpu;
         Registers reg;
         bool stop = false;
         int type;
         string diss = "Non-Implemented Special Instruction";
-        uint rd;
+        uint rd, cond;
         uint rs;
         uint rm;
 
         public override bool getStop() { return stop; }
         public override string toString() { return diss; }
-       
-        public Instr_Special_Case(Memory inst, Registers r, int num)
+        public override uint getCond() { return cond; } 
+        public Instr_Special_Case(Memory inst, Registers r, int num, CPU f)
         {
             instr = inst;
             reg = r;
+            cpu = f;
             type = num;
         }
 
-        public static Instr_Special_Case isSpecial(Memory inst, Registers r)
+        public static Instr_Special_Case isSpecial(Memory inst, Registers r, CPU f)
         {
             if(inst.ReadNibble(24) == 15) //SWI
             {
-                return new Instr_Special_Case(inst, r, 1);
+                return new Instr_Special_Case(inst, r, 1, f);
             }
             else if(checkMUL(inst)) //MUL
             {
-                return new Instr_Special_Case(inst, r, 2);
+                return new Instr_Special_Case(inst, r, 2, f);
             }
             return null;
         }
@@ -69,10 +71,12 @@ namespace armsim
         }
         public override void decode()
         {
+            cond = getChunk(28, 31);
             switch(type)
             {
                 case 1:
                     //decode for SWI
+                    
                     break;
                 case 2:
                     //instr.PrintArray();

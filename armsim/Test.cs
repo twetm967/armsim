@@ -14,8 +14,9 @@ namespace armsim
 {
     public class Test
     {
-
+        Computer comp;
         //contains unit tests to test methods in the RAM class
+        public Test(Computer c) { comp = c; }
         public void TestMethods()
         {
             Memory ram = new Memory();
@@ -40,9 +41,11 @@ namespace armsim
 
             ram.clearRam();
             Registers reg = new Registers();
+            Memory flags = new Memory();
+            flags.setMem(4);
             reg.setMem(64);
             uint number = 0xE3A02030;                  //00001100000001000000010111000111 0xE3A02030
-            Instruction inst = Instruction.decode(number, reg, ram);
+            Instruction inst = Instruction.decode(number, reg, ram, comp.getCPU());
             inst.decode();
             inst.exec();
             Debug.Assert(reg.getRegData(2) == 48);

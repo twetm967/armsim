@@ -14,12 +14,11 @@ namespace armsim
 {
     public class CPU
     {
-        bool n = false;
-        bool z = false;
-        bool c = false;
-        bool f = false;
+        bool branch = false;
+        Memory flags;
         private uint data;
         string dissA = "";
+        uint pc;
         int step_number = 0;
         static StreamWriter trace = new StreamWriter("trace.log", false);
         
@@ -29,20 +28,11 @@ namespace armsim
         Computer comp;
         bool tracer = true;
 
-        
-        /************getters*************/
-        public bool getN() { return n; }
-        public bool getZ() { return z; }
-        public bool getC() { return c; }
-        public bool getF() { return f; }
-        public string getDiss() { return dissA; }
-        /***********setters**************/
-        public void setN(bool b) { n = b; }
-        public void setZ(bool b) { z = b; }
-        public void setC(bool b) { c = b; }
-        public void setF(bool b) { f = b; }
-        public void setTrace(bool b) { tracer = b; }
-        /********************************/
+        public CPU()
+        {
+            flags = new Memory();
+            flags.setMem(4);
+        }
 
         public void resetStep()
         {
@@ -52,37 +42,113 @@ namespace armsim
         public uint fetch(Computer com)
         {
             comp = com;
+           
             reg = comp.getRegs();
             mem = comp.getMem();
-
-            data = mem.ReadWord(reg.getRegData(15) - 8);
+            pc = reg.getRegData(15) - 8;
+            data = mem.ReadWord(pc);
             ++step_number;
-            Console.WriteLine(step_number.ToString() + " " + string.Format("{0:X8}", data));
             return data;
         }
 
         public void decode()
         {
-            //this does nothing for this stage
-            inst = Instruction.decode(data, reg, mem);
+            inst = Instruction.decode(data, reg, mem, this);
             inst.decode();
         }
 
         public void execute()
         {
-            inst.exec();
-            dissA += inst.toString() + " \r\n";
+            string tester = "";
+            if (testCond())
+            {
+                inst.exec();
+                dissA += tester = step_number.ToString() + "  " +  string.Format("{0:X8}", pc) + " " + string.Format("{0:X8}", data) + "  " + inst.toString() + "\r\n";
+            }
+            else
+            {
+                dissA += tester = step_number.ToString() + "  " + string.Format("{0:X8}", pc) + " " + string.Format("{0:X8}", data) + "  Non-Executed Conditional Instruction\r\n";
+            }
             if (inst.getStop() == true) { comp.setStop(true); }
             if (tracer == true)
             {
                 writeTrace();
             }
+            
         }
-
+        public bool testCond()
+        {
+            uint cond = inst.getCond();
+            switch (cond)
+            {
+                case 0:
+                    if (getZ()) { return true; }
+                    else { return false; }
+                    break;
+                case 1:
+                    if (!getZ()) { return true; }
+                    else { return false; }
+                    break;
+                case 2:
+                    if (getC()) { return true; }
+                    else { return false; }
+                    break;
+                case 3:
+                    if (!getC()) { return true; }
+                    else { return false; }
+                    break;
+                case 4:
+                    if (getN()) { return true; }
+                    else { return false; }
+                    break;
+                case 5:
+                    if (!getN()) { return true; }
+                    else { return false; }
+                    break;
+                case 6:
+                    if (getV()) { return true; }
+                    else { return false; }
+                    break;
+                case 7:
+                    if (!getV()) { return true; }
+                    else { return false; }
+                    break;
+                case 8:
+                    if (getC() && !getZ()) { return true; }
+                    else { return false; }
+                    break;
+                case 9:
+                    if (!getC() || getZ()) { return true; }
+                    else { return false; }
+                    break;
+                case 10:
+                    if (getN() == getV()) { return true; }
+                    else { return false; }
+                    break;
+                case 11:
+                    if (getN() != getV()) { return true; }
+                    else { return false; }
+                    break;
+                case 12:
+                    if (!getZ() && getN() == getV()) { return true; }
+                    else { return false; }
+                    break;
+                case 13:
+                    if (getZ() || getN() != getV()) { return true; }
+                    else { return false; }
+                    break;
+                case 14:
+                    return true;
+                    break;
+                default:
+                    return false;
+                    break;
+            }
+        }
         public string printFlags()
         {
             string flags = "";
-            if (n == true)
+            if (getN() == true)
             {
                 flags += "1";
             }
@@ -90,7 +156,7 @@ namespace armsim
             {
                 flags += "0";
             }
-            if (z == true)
+            if (getZ() == true)
             {
                 flags += "1";
             }
@@ -98,7 +164,7 @@ namespace armsim
             {
                 flags += "0";
             }
-            if (c == true)
+            if (getC() == true)
             {
                 flags += "1";
             }
@@ -106,7 +172,7 @@ namespace armsim
             {
                 flags += "0";
             }
-            if (f == true)
+            if (getV() == true)
             {
                 flags += "1";
             }
@@ -119,7 +185,8 @@ namespace armsim
 
         public void writeTrace()
         {
-            trace.WriteLine(step_number.ToString().PadLeft(6, '0') + " " + string.Format("{0:X8}", reg.getRegData(15) - 8) + " " + mem.getMD() + " " + printFlags() + "   0=" + string.Format("{0:X8}", reg.getRegData(0)) +
+            string rand = printFlags();
+            trace.WriteLine(step_number.ToString().PadLeft(6, '0') + " " + string.Format("{0:X8}", pc) + " " + /*mem.getMD()*/ "[sys]" + " " + printFlags() + "   0=" + string.Format("{0:X8}", reg.getRegData(0)) +
                    " 1=" + string.Format("{0:X8}", reg.getRegData(1)) + " 2=" + string.Format("{0:X8}", reg.getRegData(2)) + " 3=" + string.Format("{0:X8}", reg.getRegData(3)));
             trace.WriteLine("\t4=" + string.Format("{0:X8}", reg.getRegData(4)) + "  5=" + string.Format("{0:X8}", reg.getRegData(5)) + "  6=" + string.Format("{0:X8}", reg.getRegData(6)) +
                 "  7=" + string.Format("{0:X8}", reg.getRegData(7)) + "  8=" + string.Format("{0:X8}", reg.getRegData(8)) + " 9=" + string.Format("{0:X8}", reg.getRegData(9)));
@@ -127,6 +194,24 @@ namespace armsim
                 " 13=" + string.Format("{0:X8}", reg.getRegData(13)) + " 14=" + string.Format("{0:X8}", reg.getRegData(14)));
             trace.Flush();
         }
+
+
+
+        /************getters*************/
+        public bool getN() { return flags.TestFlag(0, 31); }
+        public bool getZ() { return flags.TestFlag(0, 23); }
+        public bool getC() { return flags.TestFlag(0, 15); }
+        public bool getV() { return flags.TestFlag(0, 7); }
+        public Memory getFlags() { return flags; }
+        public string getDiss() { return dissA; }
+        /***********setters**************/
+        public void setN(bool b) { flags.SetFlag(0, 31, b); }
+        public void setZ(bool b) { flags.SetFlag(0, 23, b); }
+        public void setC(bool b) { flags.SetFlag(0, 15, b); }
+        public void setV(bool b) { flags.SetFlag(0, 7, b); }
+        public void setPC(uint number) { pc = number; }
+        public void setTrace(bool b) { tracer = b; }
+        /********************************/
 
     }
 

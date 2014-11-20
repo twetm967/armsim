@@ -16,7 +16,8 @@ namespace armsim
     public class Log
     {
         //holds the logging object
-        static TextWriterTraceListener log = new TextWriterTraceListener("log_file.log");
+        //static TextWriterTraceListener log = new TextWriterTraceListener("log_file.log");
+        static StreamWriter log = new StreamWriter("log_file.log", false);
 
         //writes a given string to my log file
         public static void WriteToLog(string str)

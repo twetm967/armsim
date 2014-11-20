@@ -38,7 +38,6 @@
             this.tracing_menu = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer10 = new System.Windows.Forms.SplitContainer();
-            this.flag_box = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.address_box = new System.Windows.Forms.TextBox();
             this.address_Btn = new System.Windows.Forms.Button();
@@ -74,6 +73,11 @@
             this.regData_grid = new System.Windows.Forms.DataGridView();
             this.registers = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.N_CBox = new System.Windows.Forms.CheckBox();
+            this.Z_CBox = new System.Windows.Forms.CheckBox();
+            this.C_CBox = new System.Windows.Forms.CheckBox();
+            this.V_CBox = new System.Windows.Forms.CheckBox();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer10)).BeginInit();
             this.splitContainer10.Panel1.SuspendLayout();
@@ -102,7 +106,7 @@
             this.toolStripMenuItem1});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(829, 24);
+            this.menuStrip2.Size = new System.Drawing.Size(884, 24);
             this.menuStrip2.TabIndex = 0;
             this.menuStrip2.Text = "menuStrip2";
             // 
@@ -183,7 +187,11 @@
             // 
             // splitContainer10.Panel1
             // 
-            this.splitContainer10.Panel1.Controls.Add(this.flag_box);
+            this.splitContainer10.Panel1.Controls.Add(this.V_CBox);
+            this.splitContainer10.Panel1.Controls.Add(this.C_CBox);
+            this.splitContainer10.Panel1.Controls.Add(this.Z_CBox);
+            this.splitContainer10.Panel1.Controls.Add(this.N_CBox);
+            this.splitContainer10.Panel1.Controls.Add(this.textBox2);
             this.splitContainer10.Panel1.Controls.Add(this.label1);
             this.splitContainer10.Panel1.Controls.Add(this.address_box);
             this.splitContainer10.Panel1.Controls.Add(this.address_Btn);
@@ -199,26 +207,15 @@
             // splitContainer10.Panel2
             // 
             this.splitContainer10.Panel2.Controls.Add(this.splitContainer11);
-            this.splitContainer10.Size = new System.Drawing.Size(829, 347);
+            this.splitContainer10.Size = new System.Drawing.Size(884, 377);
             this.splitContainer10.SplitterDistance = 104;
             this.splitContainer10.TabIndex = 1;
-            // 
-            // flag_box
-            // 
-            this.flag_box.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flag_box.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.flag_box.Location = new System.Drawing.Point(0, 37);
-            this.flag_box.Multiline = true;
-            this.flag_box.Name = "flag_box";
-            this.flag_box.ReadOnly = true;
-            this.flag_box.Size = new System.Drawing.Size(104, 119);
-            this.flag_box.TabIndex = 11;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label1.Location = new System.Drawing.Point(0, 156);
+            this.label1.Location = new System.Drawing.Point(0, 186);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 10;
@@ -227,7 +224,7 @@
             // address_box
             // 
             this.address_box.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.address_box.Location = new System.Drawing.Point(0, 169);
+            this.address_box.Location = new System.Drawing.Point(0, 199);
             this.address_box.Name = "address_box";
             this.address_box.Size = new System.Drawing.Size(104, 20);
             this.address_box.TabIndex = 9;
@@ -235,7 +232,7 @@
             // address_Btn
             // 
             this.address_Btn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.address_Btn.Location = new System.Drawing.Point(0, 189);
+            this.address_Btn.Location = new System.Drawing.Point(0, 219);
             this.address_Btn.Name = "address_Btn";
             this.address_Btn.Size = new System.Drawing.Size(104, 23);
             this.address_Btn.TabIndex = 8;
@@ -247,7 +244,7 @@
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(0, 212);
+            this.textBox1.Location = new System.Drawing.Point(0, 242);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(104, 20);
             this.textBox1.TabIndex = 7;
@@ -267,7 +264,7 @@
             // step_Btn
             // 
             this.step_Btn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.step_Btn.Location = new System.Drawing.Point(0, 232);
+            this.step_Btn.Location = new System.Drawing.Point(0, 262);
             this.step_Btn.Name = "step_Btn";
             this.step_Btn.Size = new System.Drawing.Size(104, 23);
             this.step_Btn.TabIndex = 4;
@@ -278,7 +275,7 @@
             // run_Btn
             // 
             this.run_Btn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.run_Btn.Location = new System.Drawing.Point(0, 255);
+            this.run_Btn.Location = new System.Drawing.Point(0, 285);
             this.run_Btn.Name = "run_Btn";
             this.run_Btn.Size = new System.Drawing.Size(104, 23);
             this.run_Btn.TabIndex = 3;
@@ -290,7 +287,7 @@
             // 
             this.stop_Btn.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.stop_Btn.Enabled = false;
-            this.stop_Btn.Location = new System.Drawing.Point(0, 278);
+            this.stop_Btn.Location = new System.Drawing.Point(0, 308);
             this.stop_Btn.Name = "stop_Btn";
             this.stop_Btn.Size = new System.Drawing.Size(104, 23);
             this.stop_Btn.TabIndex = 2;
@@ -301,7 +298,7 @@
             // reset_Btn
             // 
             this.reset_Btn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.reset_Btn.Location = new System.Drawing.Point(0, 301);
+            this.reset_Btn.Location = new System.Drawing.Point(0, 331);
             this.reset_Btn.Name = "reset_Btn";
             this.reset_Btn.Size = new System.Drawing.Size(104, 23);
             this.reset_Btn.TabIndex = 1;
@@ -312,7 +309,7 @@
             // exit_Btn
             // 
             this.exit_Btn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.exit_Btn.Location = new System.Drawing.Point(0, 324);
+            this.exit_Btn.Location = new System.Drawing.Point(0, 354);
             this.exit_Btn.Name = "exit_Btn";
             this.exit_Btn.Size = new System.Drawing.Size(104, 23);
             this.exit_Btn.TabIndex = 0;
@@ -343,8 +340,8 @@
             // splitContainer11.Panel2
             // 
             this.splitContainer11.Panel2.Controls.Add(this.regData_grid);
-            this.splitContainer11.Size = new System.Drawing.Size(721, 347);
-            this.splitContainer11.SplitterDistance = 470;
+            this.splitContainer11.Size = new System.Drawing.Size(776, 377);
+            this.splitContainer11.SplitterDistance = 525;
             this.splitContainer11.TabIndex = 0;
             // 
             // splitContainer12
@@ -361,8 +358,8 @@
             // splitContainer12.Panel2
             // 
             this.splitContainer12.Panel2.Controls.Add(this.tabs_page);
-            this.splitContainer12.Size = new System.Drawing.Size(470, 347);
-            this.splitContainer12.SplitterDistance = 164;
+            this.splitContainer12.Size = new System.Drawing.Size(525, 377);
+            this.splitContainer12.SplitterDistance = 178;
             this.splitContainer12.TabIndex = 0;
             // 
             // data_box
@@ -373,7 +370,7 @@
             this.data_box.Name = "data_box";
             this.data_box.ReadOnly = true;
             this.data_box.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.data_box.Size = new System.Drawing.Size(470, 164);
+            this.data_box.Size = new System.Drawing.Size(525, 178);
             this.data_box.TabIndex = 0;
             this.data_box.Text = "This box contains stuff!";
             // 
@@ -386,7 +383,7 @@
             this.tabs_page.Location = new System.Drawing.Point(0, 0);
             this.tabs_page.Name = "tabs_page";
             this.tabs_page.SelectedIndex = 0;
-            this.tabs_page.Size = new System.Drawing.Size(470, 179);
+            this.tabs_page.Size = new System.Drawing.Size(525, 195);
             this.tabs_page.TabIndex = 0;
             // 
             // memory_page
@@ -395,7 +392,7 @@
             this.memory_page.Location = new System.Drawing.Point(4, 22);
             this.memory_page.Name = "memory_page";
             this.memory_page.Padding = new System.Windows.Forms.Padding(3);
-            this.memory_page.Size = new System.Drawing.Size(462, 153);
+            this.memory_page.Size = new System.Drawing.Size(517, 169);
             this.memory_page.TabIndex = 0;
             this.memory_page.Text = "Memory";
             this.memory_page.UseVisualStyleBackColor = true;
@@ -415,7 +412,7 @@
             this.memory_Grid.Location = new System.Drawing.Point(3, 3);
             this.memory_Grid.Name = "memory_Grid";
             this.memory_Grid.ReadOnly = true;
-            this.memory_Grid.Size = new System.Drawing.Size(456, 147);
+            this.memory_Grid.Size = new System.Drawing.Size(511, 163);
             this.memory_Grid.TabIndex = 0;
             // 
             // Address
@@ -547,7 +544,7 @@
             this.regData_grid.Location = new System.Drawing.Point(0, 0);
             this.regData_grid.Name = "regData_grid";
             this.regData_grid.ReadOnly = true;
-            this.regData_grid.Size = new System.Drawing.Size(247, 347);
+            this.regData_grid.Size = new System.Drawing.Size(247, 377);
             this.regData_grid.TabIndex = 0;
             // 
             // registers
@@ -562,9 +559,66 @@
             this.value.Name = "value";
             this.value.ReadOnly = true;
             // 
+            // textBox2
+            // 
+            this.textBox2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.textBox2.Enabled = false;
+            this.textBox2.Location = new System.Drawing.Point(0, 37);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(104, 20);
+            this.textBox2.TabIndex = 13;
+            // 
+            // N_CBox
+            // 
+            this.N_CBox.AutoSize = true;
+            this.N_CBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.N_CBox.Enabled = false;
+            this.N_CBox.Location = new System.Drawing.Point(0, 57);
+            this.N_CBox.Name = "N_CBox";
+            this.N_CBox.Size = new System.Drawing.Size(104, 17);
+            this.N_CBox.TabIndex = 14;
+            this.N_CBox.Text = "N Flag";
+            this.N_CBox.UseVisualStyleBackColor = true;
+            // 
+            // Z_CBox
+            // 
+            this.Z_CBox.AutoSize = true;
+            this.Z_CBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Z_CBox.Enabled = false;
+            this.Z_CBox.Location = new System.Drawing.Point(0, 74);
+            this.Z_CBox.Name = "Z_CBox";
+            this.Z_CBox.Size = new System.Drawing.Size(104, 17);
+            this.Z_CBox.TabIndex = 15;
+            this.Z_CBox.Text = "Z Flag";
+            this.Z_CBox.UseVisualStyleBackColor = true;
+            // 
+            // C_CBox
+            // 
+            this.C_CBox.AutoSize = true;
+            this.C_CBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.C_CBox.Enabled = false;
+            this.C_CBox.Location = new System.Drawing.Point(0, 91);
+            this.C_CBox.Name = "C_CBox";
+            this.C_CBox.Size = new System.Drawing.Size(104, 17);
+            this.C_CBox.TabIndex = 16;
+            this.C_CBox.Text = "C Flag";
+            this.C_CBox.UseVisualStyleBackColor = true;
+            // 
+            // V_CBox
+            // 
+            this.V_CBox.AutoSize = true;
+            this.V_CBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.V_CBox.Enabled = false;
+            this.V_CBox.Location = new System.Drawing.Point(0, 108);
+            this.V_CBox.Name = "V_CBox";
+            this.V_CBox.Size = new System.Drawing.Size(104, 17);
+            this.V_CBox.TabIndex = 17;
+            this.V_CBox.Text = "V Flag";
+            this.V_CBox.UseVisualStyleBackColor = true;
+            // 
             // ui
             // 
-            this.ClientSize = new System.Drawing.Size(829, 371);
+            this.ClientSize = new System.Drawing.Size(884, 401);
             this.Controls.Add(this.splitContainer10);
             this.Controls.Add(this.menuStrip2);
             this.MainMenuStrip = this.menuStrip2;
@@ -635,7 +689,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox address_box;
         private System.Windows.Forms.Button address_Btn;
-        private System.Windows.Forms.TextBox flag_box;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem step_menu;
         private System.Windows.Forms.ToolStripMenuItem run_menu;
@@ -649,5 +702,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn word3;
         private System.Windows.Forms.DataGridViewTextBoxColumn word4;
         private System.Windows.Forms.TextBox file_Bx;
+        private System.Windows.Forms.CheckBox V_CBox;
+        private System.Windows.Forms.CheckBox C_CBox;
+        private System.Windows.Forms.CheckBox Z_CBox;
+        private System.Windows.Forms.CheckBox N_CBox;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }

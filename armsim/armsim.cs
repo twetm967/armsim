@@ -68,11 +68,13 @@ namespace armsim
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new ui(ref comp));
+                ui form = new ui(ref comp);
+                comp.setForm(form);
+                Application.Run(form);
             }
             else
             {
-                Test test = new Test();
+                Test test = new Test(comp);
                 if (testing) { test.TestMethods(); }
                 else if (autoTest) { test.testRun(comp); }
             }
