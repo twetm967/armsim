@@ -38,6 +38,11 @@
             this.tracing_menu = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer10 = new System.Windows.Forms.SplitContainer();
+            this.V_CBox = new System.Windows.Forms.CheckBox();
+            this.C_CBox = new System.Windows.Forms.CheckBox();
+            this.Z_CBox = new System.Windows.Forms.CheckBox();
+            this.N_CBox = new System.Windows.Forms.CheckBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.address_box = new System.Windows.Forms.TextBox();
             this.address_Btn = new System.Windows.Forms.Button();
@@ -70,14 +75,11 @@
             this.word2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.word3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.word4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.trace_tab = new System.Windows.Forms.TabPage();
+            this.trace_Bx = new System.Windows.Forms.TextBox();
             this.regData_grid = new System.Windows.Forms.DataGridView();
             this.registers = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.N_CBox = new System.Windows.Forms.CheckBox();
-            this.Z_CBox = new System.Windows.Forms.CheckBox();
-            this.C_CBox = new System.Windows.Forms.CheckBox();
-            this.V_CBox = new System.Windows.Forms.CheckBox();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer10)).BeginInit();
             this.splitContainer10.Panel1.SuspendLayout();
@@ -97,6 +99,7 @@
             this.terminal_page.SuspendLayout();
             this.stack_page.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stack_grid)).BeginInit();
+            this.trace_tab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.regData_grid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -210,6 +213,63 @@
             this.splitContainer10.Size = new System.Drawing.Size(884, 377);
             this.splitContainer10.SplitterDistance = 104;
             this.splitContainer10.TabIndex = 1;
+            // 
+            // V_CBox
+            // 
+            this.V_CBox.AutoSize = true;
+            this.V_CBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.V_CBox.Enabled = false;
+            this.V_CBox.Location = new System.Drawing.Point(0, 108);
+            this.V_CBox.Name = "V_CBox";
+            this.V_CBox.Size = new System.Drawing.Size(104, 17);
+            this.V_CBox.TabIndex = 17;
+            this.V_CBox.Text = "V Flag";
+            this.V_CBox.UseVisualStyleBackColor = true;
+            // 
+            // C_CBox
+            // 
+            this.C_CBox.AutoSize = true;
+            this.C_CBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.C_CBox.Enabled = false;
+            this.C_CBox.Location = new System.Drawing.Point(0, 91);
+            this.C_CBox.Name = "C_CBox";
+            this.C_CBox.Size = new System.Drawing.Size(104, 17);
+            this.C_CBox.TabIndex = 16;
+            this.C_CBox.Text = "C Flag";
+            this.C_CBox.UseVisualStyleBackColor = true;
+            // 
+            // Z_CBox
+            // 
+            this.Z_CBox.AutoSize = true;
+            this.Z_CBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Z_CBox.Enabled = false;
+            this.Z_CBox.Location = new System.Drawing.Point(0, 74);
+            this.Z_CBox.Name = "Z_CBox";
+            this.Z_CBox.Size = new System.Drawing.Size(104, 17);
+            this.Z_CBox.TabIndex = 15;
+            this.Z_CBox.Text = "Z Flag";
+            this.Z_CBox.UseVisualStyleBackColor = true;
+            // 
+            // N_CBox
+            // 
+            this.N_CBox.AutoSize = true;
+            this.N_CBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.N_CBox.Enabled = false;
+            this.N_CBox.Location = new System.Drawing.Point(0, 57);
+            this.N_CBox.Name = "N_CBox";
+            this.N_CBox.Size = new System.Drawing.Size(104, 17);
+            this.N_CBox.TabIndex = 14;
+            this.N_CBox.Text = "N Flag";
+            this.N_CBox.UseVisualStyleBackColor = true;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.textBox2.Enabled = false;
+            this.textBox2.Location = new System.Drawing.Point(0, 37);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(104, 20);
+            this.textBox2.TabIndex = 13;
             // 
             // label1
             // 
@@ -379,6 +439,7 @@
             this.tabs_page.Controls.Add(this.memory_page);
             this.tabs_page.Controls.Add(this.terminal_page);
             this.tabs_page.Controls.Add(this.stack_page);
+            this.tabs_page.Controls.Add(this.trace_tab);
             this.tabs_page.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabs_page.Location = new System.Drawing.Point(0, 0);
             this.tabs_page.Name = "tabs_page";
@@ -457,7 +518,7 @@
             this.terminal_page.Location = new System.Drawing.Point(4, 22);
             this.terminal_page.Name = "terminal_page";
             this.terminal_page.Padding = new System.Windows.Forms.Padding(3);
-            this.terminal_page.Size = new System.Drawing.Size(462, 153);
+            this.terminal_page.Size = new System.Drawing.Size(517, 169);
             this.terminal_page.TabIndex = 1;
             this.terminal_page.Text = "Terminal";
             this.terminal_page.UseVisualStyleBackColor = true;
@@ -472,7 +533,7 @@
             this.terminal_box.Location = new System.Drawing.Point(3, 3);
             this.terminal_box.Multiline = true;
             this.terminal_box.Name = "terminal_box";
-            this.terminal_box.Size = new System.Drawing.Size(456, 147);
+            this.terminal_box.Size = new System.Drawing.Size(511, 163);
             this.terminal_box.TabIndex = 0;
             // 
             // stack_page
@@ -481,7 +542,7 @@
             this.stack_page.Location = new System.Drawing.Point(4, 22);
             this.stack_page.Name = "stack_page";
             this.stack_page.Padding = new System.Windows.Forms.Padding(3);
-            this.stack_page.Size = new System.Drawing.Size(462, 153);
+            this.stack_page.Size = new System.Drawing.Size(517, 169);
             this.stack_page.TabIndex = 2;
             this.stack_page.Text = "Stack";
             this.stack_page.UseVisualStyleBackColor = true;
@@ -499,7 +560,7 @@
             this.stack_grid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.stack_grid.Location = new System.Drawing.Point(3, 3);
             this.stack_grid.Name = "stack_grid";
-            this.stack_grid.Size = new System.Drawing.Size(456, 147);
+            this.stack_grid.Size = new System.Drawing.Size(511, 163);
             this.stack_grid.TabIndex = 0;
             // 
             // addr
@@ -532,6 +593,27 @@
             this.word4.Name = "word4";
             this.word4.ReadOnly = true;
             // 
+            // trace_tab
+            // 
+            this.trace_tab.Controls.Add(this.trace_Bx);
+            this.trace_tab.Location = new System.Drawing.Point(4, 22);
+            this.trace_tab.Name = "trace_tab";
+            this.trace_tab.Padding = new System.Windows.Forms.Padding(3);
+            this.trace_tab.Size = new System.Drawing.Size(517, 169);
+            this.trace_tab.TabIndex = 3;
+            this.trace_tab.Text = "Trace";
+            this.trace_tab.UseVisualStyleBackColor = true;
+            // 
+            // trace_Bx
+            // 
+            this.trace_Bx.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trace_Bx.Enabled = false;
+            this.trace_Bx.Location = new System.Drawing.Point(3, 3);
+            this.trace_Bx.Multiline = true;
+            this.trace_Bx.Name = "trace_Bx";
+            this.trace_Bx.Size = new System.Drawing.Size(511, 163);
+            this.trace_Bx.TabIndex = 0;
+            // 
             // regData_grid
             // 
             this.regData_grid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -559,68 +641,12 @@
             this.value.Name = "value";
             this.value.ReadOnly = true;
             // 
-            // textBox2
-            // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(0, 37);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(104, 20);
-            this.textBox2.TabIndex = 13;
-            // 
-            // N_CBox
-            // 
-            this.N_CBox.AutoSize = true;
-            this.N_CBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.N_CBox.Enabled = false;
-            this.N_CBox.Location = new System.Drawing.Point(0, 57);
-            this.N_CBox.Name = "N_CBox";
-            this.N_CBox.Size = new System.Drawing.Size(104, 17);
-            this.N_CBox.TabIndex = 14;
-            this.N_CBox.Text = "N Flag";
-            this.N_CBox.UseVisualStyleBackColor = true;
-            // 
-            // Z_CBox
-            // 
-            this.Z_CBox.AutoSize = true;
-            this.Z_CBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Z_CBox.Enabled = false;
-            this.Z_CBox.Location = new System.Drawing.Point(0, 74);
-            this.Z_CBox.Name = "Z_CBox";
-            this.Z_CBox.Size = new System.Drawing.Size(104, 17);
-            this.Z_CBox.TabIndex = 15;
-            this.Z_CBox.Text = "Z Flag";
-            this.Z_CBox.UseVisualStyleBackColor = true;
-            // 
-            // C_CBox
-            // 
-            this.C_CBox.AutoSize = true;
-            this.C_CBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.C_CBox.Enabled = false;
-            this.C_CBox.Location = new System.Drawing.Point(0, 91);
-            this.C_CBox.Name = "C_CBox";
-            this.C_CBox.Size = new System.Drawing.Size(104, 17);
-            this.C_CBox.TabIndex = 16;
-            this.C_CBox.Text = "C Flag";
-            this.C_CBox.UseVisualStyleBackColor = true;
-            // 
-            // V_CBox
-            // 
-            this.V_CBox.AutoSize = true;
-            this.V_CBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.V_CBox.Enabled = false;
-            this.V_CBox.Location = new System.Drawing.Point(0, 108);
-            this.V_CBox.Name = "V_CBox";
-            this.V_CBox.Size = new System.Drawing.Size(104, 17);
-            this.V_CBox.TabIndex = 17;
-            this.V_CBox.Text = "V Flag";
-            this.V_CBox.UseVisualStyleBackColor = true;
-            // 
             // ui
             // 
             this.ClientSize = new System.Drawing.Size(884, 401);
             this.Controls.Add(this.splitContainer10);
             this.Controls.Add(this.menuStrip2);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip2;
             this.MinimumSize = new System.Drawing.Size(637, 410);
             this.Name = "ui";
@@ -648,6 +674,8 @@
             this.terminal_page.PerformLayout();
             this.stack_page.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.stack_grid)).EndInit();
+            this.trace_tab.ResumeLayout(false);
+            this.trace_tab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.regData_grid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -707,5 +735,7 @@
         private System.Windows.Forms.CheckBox Z_CBox;
         private System.Windows.Forms.CheckBox N_CBox;
         private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TabPage trace_tab;
+        private System.Windows.Forms.TextBox trace_Bx;
     }
 }

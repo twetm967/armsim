@@ -19,6 +19,8 @@ namespace armsim
         private uint address = 0;
         public delegate void UpdateFormDelegate();
         public UpdateFormDelegate delegate1;
+        public delegate void UpdateTerminalDelegate();
+        public UpdateTerminalDelegate delegate2;
 
         public ui(ref Computer val)
         {
@@ -26,6 +28,7 @@ namespace armsim
             this.Focus();
             //Delegate hookups
             delegate1 = new UpdateFormDelegate(updateForm);
+            delegate2 = new UpdateTerminalDelegate(updateTerminal);
             comp = val;
             this.AcceptButton = address_Btn;
             data_box.Text = "";
@@ -38,6 +41,8 @@ namespace armsim
                 memory_Grid.Rows.Add();
             }
             log_check.Checked = true;
+            this.KeyPreview = true;
+            this.KeyPress += new KeyPressEventHandler(Form_KeyPress);
             comp.getCPU().setTrace(true);
             V_CBox.IsAccessible = false;
             updateForm();
@@ -68,15 +73,17 @@ namespace armsim
             updateStack();
             updateFile();
             updateDiss();
+            trace_Bx.Text = "";
+            trace_Bx.AppendText(comp.getCPU().getTrace());
             if (comp.getStop())
             {
                 
 
-                run_Btn.Enabled = false;
-                step_Btn.Enabled = false;
+                run_Btn.Enabled = true;
+                step_Btn.Enabled = true;
                 reset_Btn.Enabled = true;
-                run_menu.Enabled = false;
-                step_menu.Enabled = false;
+                run_menu.Enabled = true;
+                step_menu.Enabled = true;
                 reset_strip.Enabled = true;
                 stop_menu.Enabled = false;
                 stop_Btn.Enabled = false;
@@ -88,7 +95,20 @@ namespace armsim
             data_box.Text = "";
             data_box.AppendText(comp.getCPU().getDiss());
         }
-
+        public void updateTerminal()
+        {
+            char c = comp.getOutput();
+            string str = "";
+            if (c == '\r' || c == '\n')
+            {
+                str = "\r\n";
+            }
+            else
+            {
+                str = c.ToString();
+            }
+            terminal_box.Text += str;
+        }
         public void updateFile()
         {
             string str = comp.getOptions().getFilename();
@@ -256,7 +276,7 @@ namespace armsim
         {
             try
             {
-                address = Convert.ToUInt32(address_box.Text);
+                address = Convert.ToUInt32(address_box.Text, 16);
                 change = false;
                 updateForm();
             }
@@ -288,11 +308,13 @@ namespace armsim
         {
             
             comp = new Computer(comp.getOptions());
+            comp.setForm(this);
             address = 0;
             run_Btn.Enabled = true;
             step_Btn.Enabled = true;
             step_menu.Enabled = true;
             run_menu.Enabled = true;
+            terminal_box.Text = "";
             updateForm();
         }
 
@@ -329,11 +351,20 @@ namespace armsim
             log_check_CheckedChanged(sender, e);
 
         }
+        private void Form_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!address_box.Focused)
+            {
+                comp.setInput(e.KeyChar);
+                terminal_box.Text += comp.getInput();
+            }
+        }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
 
     }
 }

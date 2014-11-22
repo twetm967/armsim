@@ -17,7 +17,7 @@ namespace armsim
     {
 
         
-        public static Instruction decode(uint instr, Registers reg, Memory mem, CPU cpu)
+        public static Instruction decode(uint instr, Registers reg, Memory mem, CPU cpu, Computer c)
         {
            // int type = 0;
             Memory instruction = new Memory();
@@ -54,7 +54,7 @@ namespace armsim
                 {
                     //Load/store
                     //Console.WriteLine("Load/Store Instruction...");
-                    return new Instr_LoadStore(instruction, reg, mem, cpu);
+                    return new Instr_LoadStore(instruction, reg, mem, cpu, c);
 
                 }
                

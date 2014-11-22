@@ -20,16 +20,18 @@ namespace armsim
         string diss = "Non-Implemented Load/Store Instruction";
         Memory instr, mem;
         CPU cpu;
+        Computer comp;
         Registers reg;
         //constructor
         public override bool getStop() { return false; }
         public override uint getCond() { return cond; }
-        public Instr_LoadStore(Memory inst, Registers r, Memory m, CPU f)
+        public Instr_LoadStore(Memory inst, Registers r, Memory m, CPU f, Computer c)
         {
             instr = inst;
             reg = r;
             cpu = f;
             mem = m;
+            comp = c;
         }
         public override string toString() { return diss; }
 
@@ -94,22 +96,29 @@ namespace armsim
 
             uint address = 0;
             uint op2 = op.getOp();
-            int temp = Convert.ToInt32(op2);
-            int data = 0;
+            int data = Convert.ToInt32(op2);
             uint regData = 0;
 
-            if (!u) { data = temp * -1; }
-
-            if (p) { address = reg.getRegData(rn) + (uint)data; }
+            if (!u) { data = data * -1; }
+            uint tester = reg.getRegData(rn);
+            if (p) { address = (uint)(reg.getRegData(rn) + data); }
             else { address = reg.getRegData(rn); }
-
-            if (b) { regData = mem.ReadByte(address); diss += "b "; }
-            else { regData = mem.ReadWord(address);  }
+            //if address 0x100000 then get character from queue 
+            //if no character rn = 0
+            if (address == 0x100001)
+            {
+                regData = comp.getInput();
+            }
+            else
+            {
+                if (b) { regData = mem.ReadByte(address); diss += "b "; }
+                else { regData = mem.ReadWord(address);  }
+            }
 
             diss += " r" + rd.ToString();
             reg.setRegister(rd, regData);
 
-            if (p && w) { reg.setRegister(rn, address); diss += "!"; }
+            if ((p && w )/* || !p*/) { reg.setRegister(rn, address); diss += "!"; }
 
             diss += ", [r" + rn.ToString() + op.getdiss() + "]";
 
@@ -121,7 +130,7 @@ namespace armsim
             uint address = 0;
             uint op2 = op.getOp();
             int temp = Convert.ToInt32(op2);
-            int data = 0;
+            int data = temp;
             uint regData = 0;
 
             if (!u) { data = temp * -1; }
@@ -130,16 +139,39 @@ namespace armsim
             else { address = reg.getRegData(rn); }
 
 
+            //if address 0x100001 then throw character from queue from rd
+            //if no character rn = 0
+
 
             if (b) { regData = reg.ReadByte(rd * 4); diss += "b "; }
             else { regData = reg.getRegData(rd);}
 
             diss += " r" + rd.ToString();
 
-            mem.WriteWord(address, regData);
+            if (address == 0x100000 || address == 0x100001)
+            {
+                comp.setOutput((char)regData);
+            }
+            else
+            {
+                //dont do this one
+                if (b)
+                {
+                    mem.WriteByte(address, (byte)regData);
+                }
+                else
+                {
+
+                    mem.WriteWord(address, regData);
+                }
+            }
             if (p && w) { reg.setRegister(rn, address); diss += "!"; }
 
             diss += ", [r" + rn.ToString() + op.getdiss() + "]";
+            if (address == 0x100001 || address == 0x100000) {
+                ui form = comp.getForm();
+                form.Invoke(form.delegate2);
+            }
         }
 
         public void execLDM()

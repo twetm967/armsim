@@ -45,13 +45,23 @@ namespace armsim
             flags.setMem(4);
             reg.setMem(64);
             uint number = 0xE3A02030;                  //00001100000001000000010111000111 0xE3A02030
-            Instruction inst = Instruction.decode(number, reg, ram, comp.getCPU());
+            Instruction inst = Instruction.decode(number, reg, ram, comp.getCPU(), comp);
             inst.decode();
             inst.exec();
             Debug.Assert(reg.getRegData(2) == 48);
 
             Console.WriteLine("The MOV test Passed.");
+
+            reg.setRegister(3, 100);
+            reg.setRegister(4, 1);
+            number = 0xe1a05413u;
+            Instruction instr = Instruction.decode(number, reg, ram, comp.getCPU(), comp);
+            instr.decode();
+            instr.exec();
+            Debug.Assert(reg.getRegData(5) == 200);
+            Console.WriteLine("reg shift reg passed");
             Console.ReadLine();
+
         }
 
         public void testRun(Computer comp)

@@ -18,6 +18,7 @@ namespace armsim
         bool load = false;
         Options option;
         CPU cpu;
+        Queue<char> input, output;
         Memory memory;
         Memory flags;
         Registers regs;
@@ -31,6 +32,7 @@ namespace armsim
 
             option = nOp;
             cpu = new CPU();
+            output = input = new Queue<char>();
             memory = new Memory();
             regs = new Registers();
             regs.setMem(64);
@@ -40,6 +42,7 @@ namespace armsim
             if (option.getFilename() != "")
             {
                 load = elfs.decodeHeaders(option.getFilename(), memory);
+                uint blob = memory.ReadWord(6044);
                 regs.setRegister(15, elfs.getEntry() + 8);
                 regs.setRegister(13, 28672);
             }
@@ -54,6 +57,9 @@ namespace armsim
         public SantasLittleHelpers getElf() { return elfs; }
         public Log getLog() { return logs; }
         public bool getLoad() { return load; }
+        public char getInput() { return input.Count > 0 ? input.Dequeue() : '\0'; }
+        public ui getForm() { return form; }
+        public char getOutput() { return output.Dequeue(); }
         /********************Setters************************/
         public void setCPU(CPU val) { cpu = val; }
         public void setOptions(Options op) { option = op; }
@@ -63,6 +69,8 @@ namespace armsim
         public void setLog(Log val) { logs = val; }
         public void setStop(bool b) { stop = b; }
         public void setForm(ui f) { form = f; }
+        public void setInput(char c) { input.Enqueue(c); }
+        public void setOutput(char c) { output.Enqueue(c); }
 
         public void run()
         {

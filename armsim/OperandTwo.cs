@@ -95,13 +95,13 @@ namespace armsim
                         op2 = (data << Convert.ToInt32(shiftAm));
                         if (shiftAm != 0) { diss += ", lsl " + "#" + shiftAm.ToString(); }
                         break;
-                    case 1: //ASR
+                    case 1: //LSR
                         op2 = (data >> Convert.ToInt32(shiftAm));
-                        if (shiftAm != 0) { diss += ", asr " + "#" + shiftAm.ToString(); }
-                        break;
-                    case 2: //LSR
-                        op2 = (uint)(((int)data >> (int)shiftAm));
                         if (shiftAm != 0) { diss += ", lsr " + "#" + shiftAm.ToString(); }
+                        break;
+                    case 2: //ASR
+                        op2 = (uint)(((int)data >> (int)shiftAm));
+                        if (shiftAm != 0) { diss += ", asr " + "#" + shiftAm.ToString(); }
                         break;
                     case 3: //ROR
                         op2 = (data >> Convert.ToInt32(shiftAm)) | (data << (32 - Convert.ToInt32(shiftAm)));

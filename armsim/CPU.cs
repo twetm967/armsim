@@ -18,6 +18,7 @@ namespace armsim
         Memory flags;
         private uint data;
         string dissA = "";
+        string traceS = "";
         uint pc;
         int step_number = 0;
         static StreamWriter trace = new StreamWriter("trace.log", false);
@@ -48,18 +49,25 @@ namespace armsim
             pc = reg.getRegData(15) - 8;
             data = mem.ReadWord(pc);
             ++step_number;
+            Console.WriteLine(step_number.ToString());
             return data;
         }
 
         public void decode()
         {
-            inst = Instruction.decode(data, reg, mem, this);
+            if (step_number == 17)
+            {
+                string blob = "delete me!!!";
+            }
+            inst = Instruction.decode(data, reg, mem, this, comp);
             inst.decode();
         }
 
         public void execute()
         {
             string tester = "";
+
+            if (step_number % 10 == 0) { dissA = ""; }
             if (testCond())
             {
                 inst.exec();
@@ -70,6 +78,7 @@ namespace armsim
                 dissA += tester = step_number.ToString() + "  " + string.Format("{0:X8}", pc) + " " + string.Format("{0:X8}", data) + "  Non-Executed Conditional Instruction\r\n";
             }
             if (inst.getStop() == true) { comp.setStop(true); }
+            //Console.WriteLine(tester);
             if (tracer == true)
             {
                 writeTrace();
@@ -185,13 +194,21 @@ namespace armsim
 
         public void writeTrace()
         {
+            if (step_number % 10 == 0) { traceS = ""; }
             string rand = printFlags();
-            trace.WriteLine(step_number.ToString().PadLeft(6, '0') + " " + string.Format("{0:X8}", pc) + " " + /*mem.getMD()*/ "[sys]" + " " + printFlags() + "   0=" + string.Format("{0:X8}", reg.getRegData(0)) +
+            string line = "";
+            traceS += line = (step_number.ToString().PadLeft(6, '0') + " " + string.Format("{0:X8}", pc) + " " + /*mem.getMD()*/ "[sys]" + " " + printFlags() + "   0=" + string.Format("{0:X8}", reg.getRegData(0)) +
                    " 1=" + string.Format("{0:X8}", reg.getRegData(1)) + " 2=" + string.Format("{0:X8}", reg.getRegData(2)) + " 3=" + string.Format("{0:X8}", reg.getRegData(3)));
-            trace.WriteLine("\t4=" + string.Format("{0:X8}", reg.getRegData(4)) + "  5=" + string.Format("{0:X8}", reg.getRegData(5)) + "  6=" + string.Format("{0:X8}", reg.getRegData(6)) +
+            traceS += "\r\n";
+            trace.WriteLine(line);
+            traceS += line = ("\t4=" + string.Format("{0:X8}", reg.getRegData(4)) + "  5=" + string.Format("{0:X8}", reg.getRegData(5)) + "  6=" + string.Format("{0:X8}", reg.getRegData(6)) +
                 "  7=" + string.Format("{0:X8}", reg.getRegData(7)) + "  8=" + string.Format("{0:X8}", reg.getRegData(8)) + " 9=" + string.Format("{0:X8}", reg.getRegData(9)));
-            trace.WriteLine("       10=" + string.Format("{0:X8}", reg.getRegData(10)) + " 11=" + string.Format("{0:X8}", reg.getRegData(11)) + " 12=" + string.Format("{0:X8}", reg.getRegData(12)) +
+            traceS += "\r\n";
+            trace.WriteLine(line);
+            traceS += line = ("       10=" + string.Format("{0:X8}", reg.getRegData(10)) + " 11=" + string.Format("{0:X8}", reg.getRegData(11)) + " 12=" + string.Format("{0:X8}", reg.getRegData(12)) +
                 " 13=" + string.Format("{0:X8}", reg.getRegData(13)) + " 14=" + string.Format("{0:X8}", reg.getRegData(14)));
+            traceS += "\r\n";
+            trace.WriteLine(line);
             trace.Flush();
         }
 
@@ -202,6 +219,7 @@ namespace armsim
         public bool getZ() { return flags.TestFlag(0, 23); }
         public bool getC() { return flags.TestFlag(0, 15); }
         public bool getV() { return flags.TestFlag(0, 7); }
+        public string getTrace() { return traceS; }
         public Memory getFlags() { return flags; }
         public string getDiss() { return dissA; }
         /***********setters**************/
