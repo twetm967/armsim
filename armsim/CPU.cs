@@ -55,10 +55,6 @@ namespace armsim
 
         public void decode()
         {
-            if (step_number == 17)
-            {
-                string blob = "delete me!!!";
-            }
             inst = Instruction.decode(data, reg, mem, this, comp);
             inst.decode();
         }
